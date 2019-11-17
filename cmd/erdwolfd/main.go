@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	config := web.ErdwolfConfig{
+	config := web.ApplicationConfig{
 		Environment: "development",
 		Http: web.HttpConfig {
 			Port: 8080,
@@ -18,6 +18,6 @@ func main() {
 		return
 	}
 
-	server := web.NewWebServer(config)
+	server := web.NewAppServer(config)
 	server.Start()
 }

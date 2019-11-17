@@ -10,10 +10,10 @@ import (
 
 type ErdwolfServer struct {
 	echo *echo.Echo
-	config ErdwolfConfig
+	config ApplicationConfig
 }
 
-func NewWebServer(config ErdwolfConfig) *ErdwolfServer {
+func NewAppServer(config ApplicationConfig) *ErdwolfServer {
 	e := echo.New()
 	e.HideBanner = true
 

@@ -4,11 +4,11 @@ type HttpConfig struct {
 	Port int `toml:"port"`
 }
 
-type ErdwolfConfig struct {
+type ApplicationConfig struct {
 	Environment string 		`toml:"application.environment"`
 	Http 		HttpConfig 	`toml:"application.http"`
 }
 
-func (s *ErdwolfConfig) IsDevelopment() bool {
+func (s *ApplicationConfig) IsDevelopment() bool {
 	return s.Environment == "development"
 }
