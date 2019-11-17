@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/BurntSushi/toml"
-	"github.com/erdwolfapp/Erdwolf/web"
+	"github.com/erdwolfapp/Erdwolf/app"
 )
 
 func main() {
-	config := web.ApplicationConfig{
+	config := app.ApplicationConfig{
 		Environment: "development",
-		Http: web.HttpConfig {
+		ResourcesPath: "resources",
+		Http: app.HttpConfig {
 			Port: 8080,
 		},
 	}
@@ -18,6 +19,6 @@ func main() {
 		return
 	}
 
-	server := web.NewAppServer(config)
+	server := app.NewAppServer(config)
 	server.Start()
 }
