@@ -1,11 +1,11 @@
-package web
+package app
 
 import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/pkg/errors"
-	"net/http"
+	"html/template"
 )
 
 type ErdwolfServer struct {
@@ -15,27 +15,27 @@ type ErdwolfServer struct {
 
 func NewAppServer(config ApplicationConfig) *ErdwolfServer {
 	e := echo.New()
-	e.HideBanner = true
-
-	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "${time_rfc3339} #${id}, remote:${remote_ip}, status:${status}, ${method}:${uri}\n",
-	}))
-	e.Use(middleware.Recover())
-	e.GET("/", hello)
-
-	return &ErdwolfServer {
+	server := &ErdwolfServer {
 		echo: e,
 		config: config,
 	}
+	server.echo.HideBanner = true
+
+	renderer := &TemplateRenderer{
+		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.gohtml", server.config.ResourcesPath))),
+	}
+	e.Renderer = renderer
+	server.echo.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "${time_rfc3339} #${id}, remote:${remote_ip}, status:${status}, ${method}:${uri}\n",
+	}))
+	server.echo.Use(middleware.Recover())
+
+	server.setupRoutes()
+	return server
 }
 
 func (s *ErdwolfServer) Start() {
 	if err := s.echo.Start(fmt.Sprintf(":%d", s.config.Http.Port)); err != nil {
 		s.echo.Logger.Fatal(errors.Wrap(err, "failed to start the application server"))
 	}
-}
-
-// Handler
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
 }

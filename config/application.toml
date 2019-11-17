@@ -1,5 +1,6 @@
 [application]
   environment = "development"
+  resourcesPath = "resources"
 
   [[http]]
     port = 8080
