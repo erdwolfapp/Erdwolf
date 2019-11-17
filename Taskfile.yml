@@ -1,0 +1,9 @@
+version: '2'
+
+tasks:
+  CookDevelAssets:
+    cmds:
+      - mkdir -p resources/cooked/stylesheets
+      - sass --style=expanded
+             --load-path resources/stylesheets
+             resources/stylesheets/styles.scss resources/cooked/stylesheets/styles.css
