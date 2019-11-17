@@ -1,0 +1,5 @@
+[application]
+  environment = "development"
+
+  [[http]]
+    port = 8080

@@ -30,7 +30,7 @@ func NewWebServer(config ErdwolfConfig) *ErdwolfServer {
 }
 
 func (s *ErdwolfServer) Start() {
-	if err := s.echo.Start(fmt.Sprintf(":%d", s.config.Port)); err != nil {
+	if err := s.echo.Start(fmt.Sprintf(":%d", s.config.Http.Port)); err != nil {
 		s.echo.Logger.Fatal(errors.Wrap(err, "failed to start the application server"))
 	}
 }

@@ -1,5 +1,14 @@
 package web
 
+type HttpConfig struct {
+	Port int `toml:"port"`
+}
+
 type ErdwolfConfig struct {
-	Port int
+	Environment string 		`toml:"application.environment"`
+	Http 		HttpConfig 	`toml:"application.http"`
+}
+
+func (s *ErdwolfConfig) IsDevelopment() bool {
+	return s.Environment == "development"
 }
