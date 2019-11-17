@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="cmd/erdwolfd" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="Erdwolf" />
+    <working_directory value="$PROJECT_DIR$/" />
+    <go_parameters value="-i" />
+    <kind value="PACKAGE" />
+    <filePath value="$PROJECT_DIR$/" />
+    <package value="github.com/erdwolfapp/Erdwolf/cmd/erdwolfd" />
+    <directory value="cmd/erdwolfd" />
+    <output_directory value="bin/erdwolfd" />
+    <method v="2" />
+  </configuration>
+</component>
