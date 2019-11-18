@@ -10,5 +10,5 @@ func (s *ErdwolfServer) setupRoutes() {
 	s.echo.GET("/", frontend.ServeIndex)
 
 	// Static resources
-	s.echo.Static("/static", fmt.Sprintf("%s/cooked", s.config.ResourcesPath))
+	s.echo.Static("/static/cooked", fmt.Sprintf("%s/cooked", s.config.ResourcesPath))
 }
