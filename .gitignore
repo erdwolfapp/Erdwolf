@@ -1,5 +1,8 @@
- # Binaries for programs and plugins
- /bin
+# Development files
+erdwolf.db
+
+# Binaries for programs and plugins
+/bin
 *.exe
 *.exe~
 *.dll

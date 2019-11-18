@@ -5,10 +5,10 @@ import (
 	"github.com/erdwolfapp/Erdwolf/frontend"
 )
 
-func (s *ErdwolfServer) setupRoutes() {
+func (a *Application) setupRoutes() {
 	// Home page
-	s.echo.GET("/", frontend.ServeIndex)
+	a.http.GET("/", frontend.ServeIndex)
 
 	// Static resources
-	s.echo.Static("/static/cooked", fmt.Sprintf("%s/cooked", s.config.ResourcesPath))
+	a.http.Static("/static/cooked", fmt.Sprintf("%s/cooked", a.appConfig.ResourcesPath))
 }

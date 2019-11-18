@@ -7,18 +7,30 @@ import (
 )
 
 func main() {
-	config := app.ApplicationConfig{
+	appConfig := app.ApplicationConfig{
 		Environment: "development",
 		ResourcesPath: "resources",
 		Http: app.HttpConfig {
 			Port: 8080,
 		},
 	}
-	if _, err := toml.DecodeFile("config/application.toml", &config); err != nil {
+
+	dbConfig := app.DatabaseConfig{}
+
+	if _, err := toml.DecodeFile("config/application.toml", &appConfig); err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	server := app.NewAppServer(config)
-	server.Start()
+	if _, err := toml.DecodeFile("config/database.toml", &dbConfig); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	erdwolf := app.NewInstance(appConfig, dbConfig)
+	if err := erdwolf.InitHttpServer(); err != nil {
+		fmt.Println(err)
+		return
+	}
+	erdwolf.StartListening()
 }

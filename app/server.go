@@ -8,34 +8,32 @@ import (
 	"html/template"
 )
 
-type ErdwolfServer struct {
-	echo *echo.Echo
-	config ApplicationConfig
-}
-
-func NewAppServer(config ApplicationConfig) *ErdwolfServer {
-	e := echo.New()
-	server := &ErdwolfServer {
-		echo: e,
-		config: config,
+func (a *Application) InitHttpServer() error {
+	if a.http != nil {
+		return errors.New("Application server is already initialized.")
 	}
-	server.echo.HideBanner = true
 
+	a.http = echo.New()
+	a.http.HideBanner = true
+
+	// Template Engine
 	renderer := &TemplateRenderer{
-		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.gohtml", server.config.ResourcesPath))),
+		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.gohtml", a.appConfig.ResourcesPath))),
 	}
-	e.Renderer = renderer
-	server.echo.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+	a.http.Renderer = renderer
+
+	// Middlewares
+	a.http.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${time_rfc3339} #${id}, remote:${remote_ip}, status:${status}, ${method}:${uri}\n",
 	}))
-	server.echo.Use(middleware.Recover())
+	a.http.Use(middleware.Recover())
 
-	server.setupRoutes()
-	return server
+	a.setupRoutes()
+	return nil
 }
 
-func (s *ErdwolfServer) Start() {
-	if err := s.echo.Start(fmt.Sprintf(":%d", s.config.Http.Port)); err != nil {
-		s.echo.Logger.Fatal(errors.Wrap(err, "failed to start the application server"))
+func (a *Application) StartListening() {
+	if err := a.http.Start(fmt.Sprintf(":%d", a.appConfig.Http.Port)); err != nil {
+		a.http.Logger.Fatal(errors.Wrap(err, "Failed to start the application server"))
 	}
 }
