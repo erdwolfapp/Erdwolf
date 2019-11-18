@@ -3,7 +3,8 @@ version: '2'
 tasks:
   CookDevelAssets:
     cmds:
-      - mkdir -p resources/cooked/stylesheets
+      - mkdir -p resources/cooked
+      - cp -av resources/images/* resources/cooked/
       - sass --style=expanded
              --load-path resources/stylesheets
-             resources/stylesheets/styles.scss resources/cooked/stylesheets/styles.css
+             resources/stylesheets/styles.scss resources/cooked/styles.css
