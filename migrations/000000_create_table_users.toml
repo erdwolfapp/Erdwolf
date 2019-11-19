@@ -1,0 +1,17 @@
+[info]
+  description = 'Create "users" table and its columns'
+
+[sql]
+  up = """
+CREATE TABLE `erd_users` (
+  `Identifier`    INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `Name`          VARCHAR(64) NOT NULL,
+  `IsMachine`     BOOLEAN     NOT NULL,
+-- Authentication domain: Local, OAuth2, etc.
+  `AuthDomain`    VARCHAR(16) NOT NULL,
+  `AuthEntryId`   INT         NOT NULL
+);
+"""
+  drop = """
+DROP TABLE `erd_users`;
+"""
