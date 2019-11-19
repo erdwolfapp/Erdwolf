@@ -1,13 +1,19 @@
 package app
 
 type HttpConfig struct {
-	Port int `toml:"port"`
+	Port 			int `toml:"port"`
+}
+
+type SecretsConfig struct {
+	Sessions 		string `toml:"sessions"`
 }
 
 type ApplicationConfig struct {
-	Environment 	string 		`toml:"application.environment"`
-	ResourcesPath	string		`toml:"application.resourcesPath"`
-	Http 			HttpConfig 	`toml:"application.http"`
+	Environment 	string 			`toml:"application.environment"`
+	ResourcesPath	string			`toml:"application.resourcesPath"`
+
+	Secrets			SecretsConfig	`toml:"application.secrets"`
+	Http 			HttpConfig 		`toml:"application.http"`
 }
 
 func (s *ApplicationConfig) IsDevelopment() bool {
