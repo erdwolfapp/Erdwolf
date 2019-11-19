@@ -2,6 +2,8 @@ package app
 
 import (
 	"fmt"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/pkg/errors"
@@ -27,6 +29,10 @@ func (a *Application) InitHttpServer() error {
 		Format: "${time_rfc3339} #${id}, remote:${remote_ip}, status:${status}, ${method}:${uri}\n",
 	}))
 	a.http.Use(middleware.Recover())
+
+	// Session middleware
+	sessionsSecret := []byte(a.appConfig.Secrets.Sessions)
+	a.http.Use(session.Middleware(sessions.NewCookieStore(sessionsSecret)))
 
 	a.setupRoutes()
 	return nil
