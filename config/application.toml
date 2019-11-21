@@ -5,5 +5,9 @@
   [[http]]
     port = 8080
 
+  [[auth]]
+    [[github]]
+      coreImplementation = "oauth"
+
   [[secrets]]
     COOKIE_STORE_SECRET = "ChangeMe!!!"

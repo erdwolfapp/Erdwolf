@@ -12,7 +12,7 @@ type AuthDomain interface {
 
 type AuthDomainFactory interface {
 	DomainId() string
-	Create(AuthConfig) *AuthDomain
+	Create(AuthDomainConfig) AuthDomain
 }
 
 type ExtraAuthData = map[string]string

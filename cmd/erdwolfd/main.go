@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/erdwolfapp/Erdwolf/app"
+	"github.com/erdwolfapp/Erdwolf/app/auth/oauth"
 	"github.com/erdwolfapp/Erdwolf/frontend"
 )
 
@@ -22,6 +23,16 @@ func main() {
 	}
 
 	erdwolf := app.NewInstance(appConfig, dbConfig)
+
+	if dbConfig.EnableAutoMigrations {
+		if err := erdwolf.MigrateDatabase(); err != nil {
+			handleError(err)
+			return
+		}
+	}
+
+	erdwolf.RegisterAuthDomainFactory(oauth.NewFactory())
+
 	if err := erdwolf.InitHttpServer(); err != nil {
 		handleError(err)
 		return
