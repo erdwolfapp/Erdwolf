@@ -1,11 +1,8 @@
 package app
 
-type HttpConfig struct {
-	Port 			int `toml:"port"`
-}
-
-type AuthDomainDefs map[string]AuthDomainConfig
-type SecretsConfig = map[string]string
+type AuthProviders 	= map[string]interface{}
+type AuthDomainDefs = map[string]AuthDomainConfig
+type SecretsConfig 	= map[string]string
 
 type ApplicationConfig struct {
 	Environment 	string 			`toml:"application.environment"`
@@ -16,6 +13,14 @@ type ApplicationConfig struct {
 	Secrets			SecretsConfig	`toml:"application.secrets"`
 }
 
+type HttpConfig struct {
+	Port 			int `toml:"port"`
+}
+
 func (s *ApplicationConfig) IsDevelopment() bool {
 	return s.Environment == "development"
+}
+
+func (a *Application) GetResourcesPath() string {
+	return a.appConfig.ResourcesPath
 }

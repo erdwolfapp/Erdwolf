@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/erdwolfapp/Erdwolf/app"
+	"github.com/erdwolfapp/Erdwolf/frontend"
 )
 
 func handleError(err error) {
@@ -25,5 +26,7 @@ func main() {
 		handleError(err)
 		return
 	}
+	front := frontend.New(&erdwolf)
+	front.InstallRoutes()
 	erdwolf.StartListening()
 }

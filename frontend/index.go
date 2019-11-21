@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func ServeIndex(c echo.Context) error {
+func (t *FrontendHandlers) ServeIndex(c echo.Context) error {
 	return c.Render(http.StatusOK, "index.gohtml", map[string]interface{}{
 	})
 }
