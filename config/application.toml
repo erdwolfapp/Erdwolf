@@ -6,4 +6,4 @@
     port = 8080
 
   [[secrets]]
-    sessions = "ChangeMe!"
+    COOKIE_STORE_SECRET = "ChangeMe!!!"

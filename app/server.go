@@ -31,8 +31,8 @@ func (a *Application) InitHttpServer() error {
 	a.http.Use(middleware.Recover())
 
 	// Session middleware
-	sessionsSecret := []byte(a.appConfig.Secrets.Sessions)
-	a.http.Use(session.Middleware(sessions.NewCookieStore(sessionsSecret)))
+	sessionsSecret := a.GetSecret("COOKIE_STORE_SECRET", "ChangeMe!!!")
+	a.http.Use(session.Middleware(sessions.NewCookieStore([]byte(sessionsSecret))))
 
 	a.setupRoutes()
 	return nil

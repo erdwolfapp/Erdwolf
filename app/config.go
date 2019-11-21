@@ -4,9 +4,7 @@ type HttpConfig struct {
 	Port 			int `toml:"port"`
 }
 
-type SecretsConfig struct {
-	Sessions 		string `toml:"sessions"`
-}
+type SecretsConfig = map[string]string
 
 type ApplicationConfig struct {
 	Environment 	string 			`toml:"application.environment"`
