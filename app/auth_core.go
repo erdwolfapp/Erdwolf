@@ -29,7 +29,7 @@ func (a *Application) RegisterAuthDomainFactory(factory AuthDomainFactory) {
 	a.authDomainFactories[factory.DomainId()] = factory
 }
 
-func (a *Application) NewAuthDomain(config AuthDomainConfig) error {
+func (a *Application) NewAuthDomain(name string, config AuthDomainConfig) error {
 	implementation, exists := a.authDomainFactories[config.CoreImplementation]
 
 	if !exists {

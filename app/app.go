@@ -5,7 +5,7 @@ import (
 )
 
 type Application struct {
-	appConfig			ApplicationConfig
+	appConfig			ErdwolfConfig
 	databaseConfig		DatabaseConfig
 
 	authDomains			[]*AuthDomain
@@ -13,7 +13,7 @@ type Application struct {
 	http				*echo.Echo
 }
 
-func NewInstance(appConfig ApplicationConfig, databaseConfig DatabaseConfig) Application {
+func NewInstance(appConfig ErdwolfConfig, databaseConfig DatabaseConfig) Application {
 	return Application {
 		appConfig: appConfig,
 		databaseConfig: databaseConfig,

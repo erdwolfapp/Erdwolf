@@ -15,7 +15,7 @@ func (a *Application) InitHttpServer() error {
 		return errors.New("Application server is already initialized.")
 	}
 	renderer := &TemplateRenderer{
-		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.gohtml", a.appConfig.ResourcesPath))),
+		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.gohtml", a.GetResourcesPath()))),
 	}
 
 	a.http = echo.New()
@@ -41,7 +41,7 @@ func (a *Application) GetHttp() *echo.Echo {
 }
 
 func (a *Application) StartListening() {
-	if err := a.http.Start(fmt.Sprintf(":%d", a.appConfig.Http.Port)); err != nil {
+	if err := a.http.Start(fmt.Sprintf(":%d", a.appConfig.Application.HttpPort)); err != nil {
 		a.http.Logger.Fatal(errors.Wrap(err, "Failed to start the application server"))
 	}
 }

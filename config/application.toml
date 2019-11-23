@@ -1,13 +1,13 @@
 [application]
   environment = "development"
-  resourcesPath = "resources"
+  httpPort = 8080
 
-  [[http]]
-    port = 8080
+[resources]
+  path = "resources"
 
-  [[auth]]
-    [[github]]
-      coreImplementation = "oauth"
+[authentication]
+  [authentication.nullauth]
+    coreImplementation = "null"
 
-  [[secrets]]
-    COOKIE_STORE_SECRET = "ChangeMe!!!"
+[secrets]
+  COOKIE_STORE_SECRET = "ChangeMe!!!"

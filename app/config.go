@@ -4,23 +4,27 @@ type AuthProviders 	= map[string]interface{}
 type AuthDomainDefs = map[string]AuthDomainConfig
 type SecretsConfig 	= map[string]string
 
-type ApplicationConfig struct {
-	Environment 	string 			`toml:"application.environment"`
-	ResourcesPath	string			`toml:"application.resourcesPath"`
+type ErdwolfConfig struct {
+	Application 	ApplicationPrivateConfig
+	Resources		ResourcesPrivateConfig
 
-	AuthDomains		AuthDomainDefs	`toml:"application.auth"`
-	Http 			HttpConfig 		`toml:"application.http"`
-	Secrets			SecretsConfig	`toml:"application.secrets"`
+	AuthDomains		AuthDomainDefs	`toml:"authentication"`
+	Secrets			SecretsConfig
 }
 
-type HttpConfig struct {
-	Port 			int `toml:"port"`
+type ApplicationPrivateConfig struct {
+	Environment string
+	HttpPort	int
 }
 
-func (s *ApplicationConfig) IsDevelopment() bool {
-	return s.Environment == "development"
+type ResourcesPrivateConfig struct {
+	Path		string
+}
+
+func (a *Application) IsDevelopment() bool {
+	return a.appConfig.Application.Environment == "development"
 }
 
 func (a *Application) GetResourcesPath() string {
-	return a.appConfig.ResourcesPath
+	return a.appConfig.Resources.Path
 }
