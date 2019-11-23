@@ -1,11 +1,22 @@
 package nullauth
 
-type NullAuthDomain struct {}
+import (
+	"fmt"
+	"github.com/erdwolfapp/Erdwolf/app"
+)
 
-func (f *NullAuthDomain) Name() string {
-	return "without validation"
+type NullAuthDomain struct {
+	config app.AuthDomainConfig
 }
 
-func (f *NullAuthDomain) DomainId() string {
-	return "null"
+func (d *NullAuthDomain) Name() string {
+	if d.config.FriendlyName == "" {
+		return "no validation"
+	}
+
+	return d.config.FriendlyName
+}
+
+func (d *NullAuthDomain) DomainId() string {
+	return fmt.Sprintf("null/%s", d.config.SubDomainId)
 }

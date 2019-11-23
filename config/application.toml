@@ -8,6 +8,11 @@
 [authentication]
   [authentication.nullauth]
     coreImplementation = "null"
+    friendlyName = "No validation"
+
+  [authentication.github]
+    coreImplementation = "oauth"
+    friendlyName = "GitHub"
 
 [secrets]
   COOKIE_STORE_SECRET = "ChangeMe!!!"

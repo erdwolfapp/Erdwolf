@@ -9,7 +9,9 @@ func (f *NullAuthDriver) DomainId() string {
 }
 
 func (f *NullAuthDriver) Create(config app.AuthDomainConfig) app.AuthDomain {
-	return &NullAuthDomain {}
+	return &NullAuthDomain {
+		config: config,
+	}
 }
 
 func NewFactory() app.AuthDomainFactory {

@@ -12,5 +12,7 @@ func (t *FrontendHandlers) ServeSignIn(c echo.Context) error {
 	}
 
 	return c.Render(http.StatusOK, "sign_in.gohtml", map[string]interface{}{
+		"isDevelopment": t.app.IsDevelopment(),
+		"configuredAuthProviders": t.app.GetAuthSubDomainList(),
 	})
 }

@@ -30,14 +30,17 @@ func (a *Application) RegisterAuthDomainFactory(factory AuthDomainFactory) {
 }
 
 func (a *Application) NewAuthDomain(name string, config AuthDomainConfig) error {
-	implementation, exists := a.authDomainFactories[config.CoreImplementation]
+	// Set sub-domain ID to "name" if none is specified.
+	if config.SubDomainId == "" {
+		config.SubDomainId = name
+	}
 
+	implementation, exists := a.authDomainFactories[config.CoreImplementation]
 	if !exists {
 		return errors.New(fmt.Sprintf("no underlaying implementation found for %s/%s", config.CoreImplementation, config.SubDomainId))
 	}
 
-	// TODO: Do something with the auth domain instance.
-	fmt.Println("fixme:todo: Auth domain created but __not registered__.")
-	implementation.Create(config)
+	instance := implementation.Create(config)
+	a.authDomains[instance.DomainId()] = instance
 	return nil
 }

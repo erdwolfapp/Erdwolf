@@ -8,7 +8,7 @@ type Application struct {
 	appConfig			ErdwolfConfig
 	databaseConfig		DatabaseConfig
 
-	authDomains			[]*AuthDomain
+	authDomains			map[string]AuthDomain
 	authDomainFactories map[string]AuthDomainFactory
 	http				*echo.Echo
 }
@@ -18,7 +18,7 @@ func NewInstance(appConfig ErdwolfConfig, databaseConfig DatabaseConfig) Applica
 		appConfig: appConfig,
 		databaseConfig: databaseConfig,
 
-		authDomains: []*AuthDomain{},
+		authDomains: map[string]AuthDomain{},
 		authDomainFactories: map[string]AuthDomainFactory{},
 		http: nil,
 	}
