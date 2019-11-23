@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/erdwolfapp/Erdwolf/app"
-	"github.com/erdwolfapp/Erdwolf/app/auth/oauth"
 	"github.com/erdwolfapp/Erdwolf/frontend"
 )
 
@@ -31,7 +30,8 @@ func main() {
 		}
 	}
 
-	erdwolf.RegisterAuthDomainFactory(oauth.NewFactory())
+	configureAuthImplementations(&erdwolf)
+	configureAuth(&erdwolf)
 
 	if err := erdwolf.InitHttpServer(); err != nil {
 		handleError(err)
