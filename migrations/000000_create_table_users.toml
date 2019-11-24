@@ -1,4 +1,5 @@
 [info]
+  identifier  = 'NewTable:users'
   description = 'Create "users" table and its columns'
 
 [sql]
@@ -8,7 +9,7 @@ CREATE TABLE `erd_users` (
   `Name`          VARCHAR(64) NOT NULL,
   `IsMachine`     BOOLEAN     NOT NULL,
 -- Authentication domain: Local, OAuth2, etc.
-  `AuthDomain`    VARCHAR(16) NOT NULL,
+  `AuthDomain`    VARCHAR(24) NOT NULL,
   `AuthEntryId`   INT         NOT NULL
 );
 """

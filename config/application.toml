@@ -15,10 +15,11 @@
     friendlyName = "GitHub"
 
 [database]
-  driver = "sqlite"
-  enable-auto-migratons = true
+  driver = "sqlite3"
+  autoMigrate = true
   # SQLite config
-  path = "erdwolf.db"
+  [database.sqlite]
+    path = "erdwolf.db"
 
 [secrets]
   COOKIE_STORE_SECRET = "ChangeMe!!!"

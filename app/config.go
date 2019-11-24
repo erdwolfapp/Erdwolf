@@ -23,10 +23,14 @@ type ResourcesPrivateConfig struct {
 }
 
 type DatabasePrivateConfig struct {
-	EnableAutoMigrations	bool	`toml:"database.enable-auto-migrations"`
-	Driver		 			string 	`toml:"database.driver"`
-	// SQLite
-	Path					string	`toml:"database.sqlite.path"`
+	EnableAutoMigrations	bool	`toml:"autoMigrate"`
+	Driver		 			string
+
+	SQLite					SQLitePrivateConfig
+}
+
+type SQLitePrivateConfig struct {
+	Path		string
 }
 
 func (a *Application) IsDevelopment() bool {

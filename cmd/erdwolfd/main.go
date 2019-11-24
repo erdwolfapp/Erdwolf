@@ -17,8 +17,13 @@ func main() {
 	}
 
 	erdwolf := app.NewInstance(appConfig)
+	if err := erdwolf.OpenDBConnection(); err != nil {
+		handleError(err)
+		return
+	}
+	defer erdwolf.CleanUp()
 
-	if dbConfig.EnableAutoMigrations {
+	if appConfig.Database.EnableAutoMigrations {
 		if err := erdwolf.MigrateDatabase(); err != nil {
 			handleError(err)
 			return
