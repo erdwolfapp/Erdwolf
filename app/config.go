@@ -6,6 +6,7 @@ type SecretsConfig 	= map[string]string
 
 type ErdwolfConfig struct {
 	Application 	ApplicationPrivateConfig
+	Database		DatabasePrivateConfig
 	Resources		ResourcesPrivateConfig
 
 	AuthDomains		AuthDomainDefs	`toml:"authentication"`
@@ -19,6 +20,13 @@ type ApplicationPrivateConfig struct {
 
 type ResourcesPrivateConfig struct {
 	Path		string
+}
+
+type DatabasePrivateConfig struct {
+	EnableAutoMigrations	bool	`toml:"database.enable-auto-migrations"`
+	Driver		 			string 	`toml:"database.driver"`
+	// SQLite
+	Path					string	`toml:"database.sqlite.path"`
 }
 
 func (a *Application) IsDevelopment() bool {

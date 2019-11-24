@@ -15,5 +15,3 @@ var appConfig = app.ErdwolfConfig{
 	AuthDomains: app.AuthDomainDefs{},
 	Secrets: app.SecretsConfig{},
 }
-
-var dbConfig = app.DatabaseConfig{}

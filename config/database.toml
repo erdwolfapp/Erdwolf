@@ -1,6 +1,0 @@
-[database]
-  driver = "sqlite"
-  enable-auto-migratons = true
-
-  [[sqlite]]
-    path = "erdwolf.db"

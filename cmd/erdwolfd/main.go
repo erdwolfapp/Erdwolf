@@ -16,12 +16,7 @@ func main() {
 		return
 	}
 
-	if err := loadConfig(&dbConfig, CONFIG_DATABASE); err != nil {
-		handleError(err)
-		return
-	}
-
-	erdwolf := app.NewInstance(appConfig, dbConfig)
+	erdwolf := app.NewInstance(appConfig)
 
 	if dbConfig.EnableAutoMigrations {
 		if err := erdwolf.MigrateDatabase(); err != nil {

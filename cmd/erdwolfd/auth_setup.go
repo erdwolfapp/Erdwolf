@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"github.com/erdwolfapp/Erdwolf/app"
 	"github.com/erdwolfapp/Erdwolf/app/auth/nullauth"
-	"github.com/erdwolfapp/Erdwolf/app/auth/oauth"
 )
 
 func configureAuthImplementations(erdwolf *app.Application) {
 	fmt.Println("Registering auth domain factories")
 	erdwolf.RegisterAuthDomainFactory(nullauth.NewFactory())
-	erdwolf.RegisterAuthDomainFactory(oauth.NewFactory())
+	//erdwolf.RegisterAuthDomainFactory(oauth.NewFactory())
 }
 
 func configureAuth(erdwolf *app.Application) {

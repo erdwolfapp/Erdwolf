@@ -14,5 +14,11 @@
     coreImplementation = "oauth"
     friendlyName = "GitHub"
 
+[database]
+  driver = "sqlite"
+  enable-auto-migratons = true
+  # SQLite config
+  path = "erdwolf.db"
+
 [secrets]
   COOKIE_STORE_SECRET = "ChangeMe!!!"
