@@ -23,3 +23,8 @@ func (a *Application) OpenDBConnection() error {
 	a.orm = db
 	return nil
 }
+
+func (a *Application) closeDBConnection() error {
+	fmt.Println("===> Closing database connection")
+	return a.orm.Close()
+}
