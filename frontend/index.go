@@ -6,6 +6,6 @@ import (
 )
 
 func (t *FrontendHandlers) ServeIndex(c echo.Context) error {
-	return c.Render(http.StatusOK, "index.gohtml", map[string]interface{}{
+	return c.Render(http.StatusOK, "index.html", map[string]interface{}{
 	})
 }

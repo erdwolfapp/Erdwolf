@@ -11,7 +11,7 @@ func (t *FrontendHandlers) ServeSignIn(c echo.Context) error {
 		return errors.New("no auth providers are configured")
 	}
 
-	return c.Render(http.StatusOK, "sign_in.gohtml", map[string]interface{}{
+	return c.Render(http.StatusOK, "sign_in.html", map[string]interface{}{
 		"isDevelopment": t.app.IsDevelopment(),
 		"configuredAuthProviders": t.app.GetAuthSubDomainList(),
 	})

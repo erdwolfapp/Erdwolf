@@ -13,7 +13,7 @@ func httpErrorHandler(err error, c echo.Context) {
 		code = he.Code
 	}
 
-	errorPage := fmt.Sprintf("error-%d.gohtml", code)
+	errorPage := fmt.Sprintf("error-%d.html", code)
 	if err2 := c.Render(code, errorPage, nil); err2 != nil {
 		c.Logger().Error(err2)
 	}
