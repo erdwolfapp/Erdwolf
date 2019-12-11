@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/erdwolfapp/Erdwolf/frontend"
 	"github.com/erdwolfapp/Erdwolf/internal/app"
+	"github.com/erdwolfapp/Erdwolf/internal/webssr"
 )
 
 func handleError(err error) {
@@ -37,7 +37,11 @@ func main() {
 		handleError(err)
 		return
 	}
-	front := frontend.New(&erdwolf)
-	front.InstallRoutes()
+
+	// Set up server-side rendered page routing
+	webSSR := webssr.New(&erdwolf)
+	webSSR.InstallRoutes()
+
+	// Run the actual HTTP server
 	erdwolf.StartListening()
 }
