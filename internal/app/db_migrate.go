@@ -4,19 +4,19 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BurntSushi/toml"
-	"github.com/jinzhu/gorm"
+	"github.com/erdwolfapp/Erdwolf/internal/db"
 	"os"
 	"path/filepath"
 )
 
-func dbMigrateFindSchemas() ([]DBChangeSchema, error) {
-	var results []DBChangeSchema
+func dbMigrateFindSchemas() ([]db.SchemaChange, error) {
+	var results []db.SchemaChange
 	err := filepath.Walk("./migrations", func (path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
 			return nil
 		}
 
-		schema := DBChangeSchema{}
+		schema := db.SchemaChange{}
 		if _, err := toml.DecodeFile(path, &schema); err != nil {
 			return err
 		}
@@ -30,9 +30,9 @@ func dbMigrateFindSchemas() ([]DBChangeSchema, error) {
 
 func (a *Application) MigrateDatabase() error {
 	fmt.Println("==> Running database migration...")
-	if !a.orm.HasTable(DB_MIGRATE_LOG_TABLE_NAME) {
+	if !a.orm.HasTable(db.MigrationLogTableName) {
 		fmt.Println("===> Migration log is not initialized yet. Initializing...")
-		a.orm.AutoMigrate(DBMigrateLog{})
+		a.orm.AutoMigrate(db.SchemaChangeLog{})
 		if a.orm.Error != nil {
 			return a.orm.Error
 		}
@@ -40,7 +40,7 @@ func (a *Application) MigrateDatabase() error {
 
 	// Pull the migration log
 	fmt.Println("===> Retrieving logs...")
-	var changeLog []DBMigrateLog
+	var changeLog []db.SchemaChangeLog
 	a.orm.Find(&changeLog)
 
 	// Discover available migration schemas
@@ -53,16 +53,16 @@ func (a *Application) MigrateDatabase() error {
 	// Check if we have info about applied migrations
 	fmt.Println("===> Validating past data...")
 	for _, logEntry := range changeLog {
-		schema, found := findSchemaById(localSchemas, logEntry.Identifier)
+		schema, found := db.FindSchemaById(localSchemas, logEntry.Identifier)
 		if !found {
 			return errors.New(fmt.Sprintf("\"%s\" has been applied but its schema is missing", logEntry.Identifier))
 		}
 
-		if logEntry.Verb != VerbMigrationApplied && logEntry.Verb != VerbMigrationReverted {
+		if logEntry.Verb != db.VerbMigrationApplied && logEntry.Verb != db.VerbMigrationReverted {
 			return errors.New(fmt.Sprintf("unsafe to continue due to corruption: no state info for change \"%s\"", logEntry.Identifier))
 		}
 
-		if logEntry.Verb == VerbMigrationReverted && !schema.Info.SafeApplied {
+		if logEntry.Verb == db.VerbMigrationReverted && !schema.Info.SafeApplied {
 			fmt.Printf("WARN: Potentially unsafe change was applied before: %s - %s\n", schema.Info.Identifier, schema.Info.Description)
 		}
 	}
@@ -74,8 +74,8 @@ func (a *Application) MigrateDatabase() error {
 			continue
 		}
 
-		log, found := findLatestSchemaLogEntry(changeLog, schema.Info.Identifier)
-		if found && log.Verb == VerbMigrationApplied {
+		log, found := db.FindLatestSchemaLogEntry(changeLog, schema.Info.Identifier)
+		if found && log.Verb == db.VerbMigrationApplied {
 			continue
 		}
 
@@ -86,9 +86,9 @@ func (a *Application) MigrateDatabase() error {
 		}
 
 		// Mark the change as merged
-		newLog := DBMigrateLog {
+		newLog := db.SchemaChangeLog {
 			Identifier: schema.Info.Identifier,
-			Verb: VerbMigrationApplied,
+			Verb: db.VerbMigrationApplied,
 		}
 		a.orm.Create(&newLog)
 		if a.orm.Error != nil {

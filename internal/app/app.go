@@ -1,10 +1,11 @@
 package app
 
 import (
+	"fmt"
+	"github.com/erdwolfapp/Erdwolf/internal/auth"
+	"github.com/erdwolfapp/Erdwolf/internal/configs"
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo/v4"
-	"github.com/erdwolfapp/Erdwolf/internal/configs"
-	"github.com/erdwolfapp/Erdwolf/internal/auth"
 )
 
 type Application struct {
@@ -16,7 +17,7 @@ type Application struct {
 	http				*echo.Echo
 }
 
-func NewInstance(appConfig ErdwolfConfig) Application {
+func NewInstance(appConfig configs.ErdwolfConfig) Application {
 	return Application {
 		appConfig: appConfig,
 

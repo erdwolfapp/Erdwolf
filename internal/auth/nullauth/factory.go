@@ -1,6 +1,6 @@
 package nullauth
 
-import "github.com/erdwolfapp/Erdwolf/app"
+import "github.com/erdwolfapp/Erdwolf/internal/auth"
 
 type NullAuthDriver struct {}
 
@@ -8,12 +8,12 @@ func (f *NullAuthDriver) DomainId() string {
 	return "null"
 }
 
-func (f *NullAuthDriver) Create(config app.AuthDomainConfig) app.AuthDomain {
+func (f *NullAuthDriver) Create(config auth.DomainConfig) auth.Domain {
 	return &NullAuthDomain {
 		config: config,
 	}
 }
 
-func NewFactory() app.AuthDomainFactory {
+func NewFactory() auth.DomainFactory {
 	return &NullAuthDriver{}
 }

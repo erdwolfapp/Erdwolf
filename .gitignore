@@ -19,6 +19,10 @@ erdwolf.db
 vendor/
 
 # User-specific stuff
+.idea/dataSources.xml
+.idea/inspectionProfiles
+.idea/terminal.xml
+.idea/watcherTasks.xml
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml

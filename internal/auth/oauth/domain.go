@@ -1,11 +1,22 @@
 package oauth
 
-type OAuthDomain struct {}
+import (
+	"fmt"
+	"github.com/erdwolfapp/Erdwolf/internal/auth"
+)
 
-func (f *OAuthDomain) Name() string {
-	return "an OAuth provider"
+type OAuthDomain struct {
+	config auth.DomainConfig
 }
 
-func (f *OAuthDomain) DomainId() string {
-	return "oauth/null"
+func (d *OAuthDomain) Name() string {
+	if d.config.FriendlyName == "" {
+		return "an OAuth2 provider"
+	}
+
+	return d.config.FriendlyName
+}
+
+func (d *OAuthDomain) DomainId() string {
+	return fmt.Sprintf("null/%s", d.config.SubDomainId)
 }

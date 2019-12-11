@@ -2,11 +2,11 @@ package nullauth
 
 import (
 	"fmt"
-	"github.com/erdwolfapp/Erdwolf/app"
+	"github.com/erdwolfapp/Erdwolf/internal/auth"
 )
 
 type NullAuthDomain struct {
-	config app.AuthDomainConfig
+	config auth.DomainConfig
 }
 
 func (d *NullAuthDomain) Name() string {

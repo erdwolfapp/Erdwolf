@@ -1,6 +1,6 @@
 package oauth
 
-import "github.com/erdwolfapp/Erdwolf/app"
+import "github.com/erdwolfapp/Erdwolf/internal/auth"
 
 type OAuthDomainFactory struct {}
 
@@ -8,10 +8,12 @@ func (f *OAuthDomainFactory) DomainId() string {
 	return "oauth"
 }
 
-func (f *OAuthDomainFactory) Create(config app.AuthDomainConfig) app.AuthDomain {
-	return &OAuthDomain {}
+func (f *OAuthDomainFactory) Create(config auth.DomainConfig) auth.Domain {
+	return &OAuthDomain {
+		config: config,
+	}
 }
 
-func NewFactory() app.AuthDomainFactory {
+func NewFactory() auth.DomainFactory {
 	return &OAuthDomainFactory{}
 }

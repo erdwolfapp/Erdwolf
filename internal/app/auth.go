@@ -3,13 +3,14 @@ package app
 import (
 	"errors"
 	"fmt"
+	"github.com/erdwolfapp/Erdwolf/internal/auth"
 )
 
-func (a *Application) RegisterAuthDomainFactory(factory AuthDomainFactory) {
+func (a *Application) RegisterAuthDomainFactory(factory auth.DomainFactory) {
 	a.authDomainFactories[factory.DomainId()] = factory
 }
 
-func (a *Application) NewAuthDomain(name string, config AuthDomainConfig) error {
+func (a *Application) NewAuthDomain(name string, config auth.DomainConfig) error {
 	// Set sub-domain ID to "name" if none is specified.
 	if config.SubDomainId == "" {
 		config.SubDomainId = name
@@ -29,6 +30,6 @@ func (a *Application) IsAnyAuthProviderAvailable() bool {
 	return len(a.authDomains) > 0
 }
 
-func (a *Application) GetAuthSubDomainList() *map[string]AuthDomain {
+func (a *Application) GetAuthSubDomainList() *map[string]auth.Domain {
 	return &a.authDomains
 }

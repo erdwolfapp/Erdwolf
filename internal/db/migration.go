@@ -1,10 +1,12 @@
 package db
 
+import "github.com/jinzhu/gorm"
+
 const MigrationLogTableName = "ed_db_migrate_log"
 const VerbMigrationReverted = "down"
 const VerbMigrationApplied = "up"
 
-type DBChangeSchema struct {
+type SchemaChange struct {
 	Info struct {
 		Identifier	string
 		Description	string
@@ -16,7 +18,7 @@ type DBChangeSchema struct {
 	}
 }
 
-func findSchemaById(list []DBChangeSchema, id string) (*DBChangeSchema, bool) {
+func FindSchemaById(list []SchemaChange, id string) (*SchemaChange, bool) {
 	for _, object := range list {
 		if object.Info.Identifier == id {
 			return &object, true
@@ -26,19 +28,19 @@ func findSchemaById(list []DBChangeSchema, id string) (*DBChangeSchema, bool) {
 	return nil, false
 }
 
-type DBMigrateLog struct {
+type SchemaChangeLog struct {
 	gorm.Model
 
 	Identifier		string	`gorm:"size:64"`
 	Verb			string 	`gorm:"size:4"`
 }
 
-func (DBMigrateLog) TableName() string {
+func (SchemaChangeLog) TableName() string {
 	return MigrationLogTableName
 }
 
-func findLatestSchemaLogEntry(list []DBMigrateLog, id string) (*DBMigrateLog, bool) {
-	// Find latest DBMigrateLog by ID in a typical log array.
+func FindLatestSchemaLogEntry(list []SchemaChangeLog, id string) (*SchemaChangeLog, bool) {
+	// Find latest SchemaChangeLog by ID in a typical log array.
 	// Useful in case a migration was reverted by system admin.
 	for index := len(list) - 1; index >= 0; index-- {
 		object := &list[index]
