@@ -1,6 +1,6 @@
 package frontend
 
-import "github.com/erdwolfapp/Erdwolf/app"
+import "github.com/erdwolfapp/Erdwolf/internal/app"
 
 type FrontendHandlers struct {
 	app *app.Application

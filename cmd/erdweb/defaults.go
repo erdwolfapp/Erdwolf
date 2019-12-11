@@ -1,17 +1,17 @@
 package main
 
-import "github.com/erdwolfapp/Erdwolf/app"
+import "github.com/erdwolfapp/Erdwolf/internal/configs"
 
-var appConfig = app.ErdwolfConfig{
-	Application: app.ApplicationPrivateConfig {
+var appConfig = configs.ErdwolfConfig{
+	Application: configs.ApplicationPrivateConfig {
 		Environment: "development",
 		HttpPort: 8080,
 	},
 
-	Resources: app.ResourcesPrivateConfig {
+	Resources: configs.ResourcesPrivateConfig {
 		Path: "resources",
 	},
 
-	AuthDomains: app.AuthDomainDefs{},
-	Secrets: app.SecretsConfig{},
+	AuthDomains: configs.AuthDomainDefs{},
+	Secrets: configs.SecretsPrivateConfig{},
 }

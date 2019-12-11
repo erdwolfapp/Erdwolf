@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/erdwolfapp/Erdwolf/app"
 	"github.com/erdwolfapp/Erdwolf/frontend"
+	"github.com/erdwolfapp/Erdwolf/internal/app"
 )
 
 func handleError(err error) {

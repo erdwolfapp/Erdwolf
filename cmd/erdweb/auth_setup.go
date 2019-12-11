@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/erdwolfapp/Erdwolf/app"
-	"github.com/erdwolfapp/Erdwolf/app/auth/nullauth"
+	"github.com/erdwolfapp/Erdwolf/internal/app"
+	"github.com/erdwolfapp/Erdwolf/internal/auth/nullauth"
 )
 
 func configureAuthImplementations(erdwolf *app.Application) {
