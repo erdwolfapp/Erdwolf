@@ -15,7 +15,7 @@ func (a *Application) InitHttpServer() error {
 		return errors.New("Application server is already initialized.")
 	}
 	renderer := &TemplateRenderer{
-		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.gohtml", a.GetResourcesPath()))),
+		templates: template.Must(template.ParseGlob(fmt.Sprintf("%s/templates/*.html", a.GetResourcesPath()))),
 	}
 
 	a.http = echo.New()
