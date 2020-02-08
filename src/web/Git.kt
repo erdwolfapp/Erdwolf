@@ -17,11 +17,18 @@ fun Route.git() {
             call.respond(HttpStatusCode.BadRequest)
             return@get
         }
-        val (err, msg) = gitServer.createNewRepository(project!!+".git")
+        if(!project.matches("[A-z0-9_-]+".toRegex())){
+            call.respond(HttpStatusCode.BadRequest)
+            return@get
+        }
+        val (err, msg) = gitServer.createNewRepository("$project.git")
         if(err) {
             call.respond(HttpStatusCode.InternalServerError, msg)
             return@get
         }
         call.respond(HttpStatusCode.OK, msg)
+    }
+    get("/git/{...}"){
+        call.respond(HttpStatusCode.BadRequest)
     }
 }
