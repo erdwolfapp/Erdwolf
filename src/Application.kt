@@ -1,19 +1,23 @@
 package com.erdwolf
 
 import com.erdwolf.api.v1.healthCheck
+import com.erdwolf.web.git
 import com.erdwolf.web.root
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.content.*
-import io.ktor.http.content.*
-import io.ktor.locations.*
-import io.ktor.sessions.*
-import io.ktor.features.*
-import org.slf4j.event.*
-import io.ktor.gson.*
+import io.ktor.application.Application
+import io.ktor.application.install
+import io.ktor.features.AutoHeadResponse
+import io.ktor.features.CallLogging
+import io.ktor.features.ContentNegotiation
+import io.ktor.features.StatusPages
+import io.ktor.gson.gson
+import io.ktor.http.content.resources
+import io.ktor.http.content.static
+import io.ktor.locations.Locations
+import io.ktor.request.path
+import io.ktor.routing.routing
+import io.ktor.sessions.Sessions
+import org.slf4j.event.Level
+
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
@@ -39,6 +43,7 @@ fun Application.module(testing: Boolean = false) {
     routing {
         root()
         healthCheck()
+        git()
 
         static("/static") {
             resources("static")
