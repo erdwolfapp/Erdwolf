@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>ErdWolf - Login</title>
+    <link rel="stylesheet" href="/public/theme.css">
+</head>
+
+<body>
+    <div class="container dark_gray">
+        <div class="center gray">
+            <form action="/api/login" method="POST">
+                <table>
+                    <tr>
+                        <td><label for="username">Username: </label></td>
+                        <td><input id="username" name="username" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password: </label></td>
+                        <td><input id="password" name="password" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit" class="submit">Login</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

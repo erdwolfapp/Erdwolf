@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <title>ErdWolf - Login</title>
+    <link rel="stylesheet" href="/public/theme.css">
+    </style>
+</head>
+
+<body>
+    <div class="container dark_gray">
+        <div class="center gray">
+            <form action="/api/register" method="POST">
+                <table>
+                    <tr>
+                        <td><label for="username">Username: </label></td>
+                        <td><input id="username" name="username" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password: </label></td>
+                        <td><input id="password" name="password" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="rpassword">Repeat password: </label></td>
+                        <td><input id="rpassword" name="repeat_password" type="password"></td>
+                    </tr>
+                    {{#if invite_code_required}}
+                    <tr>
+                        <td><label for="invitecode">Invite code: </label></td>
+                        {{#if invite_code}}
+                        <td><input id="invitecode" name="invitecode" type="text" value="{{invite_code}}"></td>
+                        {{else}}
+                        <td><input id="invitecode" name="invitecode" type="text"></td>
+                        {{/if}}
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p>Invite code is needed for this server, please contact an admin for one.</p>
+                        </td>
+                    </tr>
+                    {{/if}}
+                    <tr>
+                        <td colspan="2"><button type="submit" class="submit">Register</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

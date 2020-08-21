@@ -1,0 +1,18 @@
+[package]
+authors = ["MGlolenstine <mglolenstine@gmail.com>"]
+edition = "2018"
+name = "erdwolf"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+diesel = {version = "1.4.5", features = ["sqlite"]}
+dotenv = "0.15.0"
+dotenv_codegen = "0.15.0"
+passwors = "0.1.1"
+rocket = "0.4.5"
+
+[dependencies.rocket_contrib]
+default-features = false
+features = ["handlebars_templates", "serve"]
+version = "0.4.5"
