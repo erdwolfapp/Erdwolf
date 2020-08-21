@@ -5,6 +5,7 @@ pub struct User {
     pub password_hash: String,
     pub password_salt: String,
     pub invite_code_used: Option<i32>,
+    pub role: Option<i32>,
 }
 
 use crate::schema::users;
@@ -15,6 +16,7 @@ pub struct UserInsertable<'a> {
     pub password_hash: &'a str,
     pub password_salt: &'a str,
     pub invite_code_used: Option<i32>,
+    pub role: Option<i32>,
 }
 
 #[derive(Queryable)]
