@@ -28,7 +28,8 @@ fn main() {
                 paths::register,
                 paths::register_with_code,
                 paths::home,
-                paths::login_api
+                paths::login_api,
+                paths::register_api
             ],
         )
         .launch();

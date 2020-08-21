@@ -107,7 +107,7 @@ pub fn login_api(mut cookies: Cookies, form: Form<LoginForm>) -> Redirect {
 }
 
 #[post("/api/register", data = "<form>")]
-pub fn register_api(mut _cookies: Cookies, form: Form<RegisterForm>) -> Redirect {
+pub fn register_api(mut cookies: Cookies, form: Form<RegisterForm>) -> Redirect {
     dotenv().ok();
     if env::var("REGISTRATION_ENABLED").is_err() {
         println!("Please make sure to set the REGISTRATION_ENABLED env variable!");
@@ -118,18 +118,18 @@ pub fn register_api(mut _cookies: Cookies, form: Form<RegisterForm>) -> Redirect
         let mut invite_code: Option<i32> = None;
         if env::var("REGISTRATION_INVITE_CODE_ONLY").is_ok() {
             if env::var("REGISTRATION_INVITE_CODE_ONLY").unwrap() == "1" {
-                if form.invite_code.len() == 0 {
+                if form.invite_code.is_none() || form.invite_code.unwrap().len() == 0 {
                     //TODO: Invite code wasn't specified
                     return Redirect::to(uri!(register));
                 }
                 use crate::schema::invite_codes::dsl::*;
                 let results = invite_codes
-                    .filter(code.eq(form.invite_code.to_string()))
+                    .filter(code.eq(form.invite_code.unwrap().to_string()))
                     .load::<InviteCode>(&connection)
                     .expect("Error loading invite codes");
                 if results.len() != 1 {
                     //TODO: Invalid invite_code
-                    let c = &form.invite_code.to_string();
+                    let c = &form.invite_code.unwrap().to_string();
                     return Redirect::to(uri!(register_with_code: c));
                 }
                 let result = results.get(0).unwrap();
@@ -137,7 +137,7 @@ pub fn register_api(mut _cookies: Cookies, form: Form<RegisterForm>) -> Redirect
                     //TODO: Overused invite_code
                     return Redirect::to(uri!(register));
                 }
-                diesel::update(invite_codes.filter(code.eq(form.invite_code.to_string())))
+                diesel::update(invite_codes.filter(code.eq(form.invite_code.unwrap().to_string())))
                     .set(times_used.eq(result.times_used + 1))
                     .execute(&connection)
                     .expect(&format!("Unable to find post {}", result.id));
@@ -174,6 +174,14 @@ pub fn register_api(mut _cookies: Cookies, form: Form<RegisterForm>) -> Redirect
                 .values(&new_user)
                 .execute(&connection)
                 .expect("Something went wrong while inserting new user!");
+            let results = users
+                .filter(username.eq(form.username.to_string()))
+                .load::<User>(&connection)
+                .expect("Error loading users");
+            let result = results.get(0).unwrap();
+            if results.len() == 1 {
+                cookies.add_private(Cookie::new("UID", result.id.to_string()));
+            }
             return Redirect::to(uri!(home));
         }
     } else {

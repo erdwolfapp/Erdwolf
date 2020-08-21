@@ -12,5 +12,5 @@ pub struct RegisterForm<'f> {
     pub username: &'f RawStr,
     pub password: &'f RawStr,
     pub repeat_password: &'f RawStr,
-    pub invite_code: &'f RawStr,
+    pub invite_code: Option<&'f RawStr>,
 }
