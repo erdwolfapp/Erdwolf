@@ -26,6 +26,7 @@ fn main() {
                 paths::index,
                 paths::login,
                 paths::register,
+                paths::register_with_code,
                 paths::home,
                 paths::login_api
             ],
