@@ -1,5 +1,5 @@
 # Erdwolf
-This is a web-service that allows remote management of `Dokku` over a web-interface.
+This is a web-service that allows remote management of podman containers over a web-interface, similar to what a `Dokku` does, just more accessible.
 
 The project is based on `Rust` and uses [rocket.rs](https://rocket.rs) for the webserver and [diesel.rs](https://diesel.rs) for database ORM.
 
@@ -24,9 +24,9 @@ You can build the server from sources for yourself.
     git clone https://github.com/erdwolfapp/Erdwolf.git
     ```
 
-- Install `diesel-cli` which you're going to need for DB creation
+- Install `diesel-cli` which you're going to need for DB creation. Feel free to remove arguments if you want to use it for other types of databases.
     ```
-    cargo install diesel-cli
+    cargo install diesel-cli --no-default-features --features="sqlite"
     ```
 
 - Add `~/.cargo/bin` to your PATH (If you're on Linux)
