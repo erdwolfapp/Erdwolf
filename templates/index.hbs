@@ -1,26 +1,20 @@
-<html>
+{{#> layouts/modal_page }}
+    <div class="modal-header">
+        <div class="flex align-center column">
+            <div class="app-logo">
+                <img src="/static/svg/app.svg" alt="Erdwolf" />
+            </div>
 
-<head>
-    <title>ErdWolf</title>
-</head>
-
-<body>
-    <nav width="100%">
-        <table width="100%">
-            <tr>
-                <td width="50%">
-                    <h2>ErdWolf</h2>
-                </td>
-                <td width="50%" align="right">
-                    <button onclick="window.location.href='/login'">Login</button>
-                    <button onclick="window.location.href='/register'">Register</button>
-                </td>
-            </tr>
-        </table>
-    </nav>
-    <div>
-        <p>There's some random text that is used as a placeholder... something... something...</p>
+            <span class="app-name">Erdwolf</span>
+        </div>
     </div>
-</body>
 
-</html>
+    <div class="modal-content">
+        <label class="section-title">Sign in</label>
+
+        <div class="flex justify-content-between wrap">
+            <a href="/register">Have an invite code?</a>
+        </div>
+    </div>
+{{/ layouts/modal_page }}
+

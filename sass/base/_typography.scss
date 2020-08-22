@@ -1,0 +1,22 @@
+$fonts: 'system' !default;
+
+body {
+  @if ($fonts == 'system') {
+    font-family:
+            /* Some browsers support this alias */
+            system-ui,
+              /* MacOS */
+            -apple-system, BlinkMacSystemFont,
+              /* Windows Vista+ */
+            "Segoe UI",
+              /* Android, Linux, ... */
+            Roboto, "Oxygen", Oxygen-Sans, Ubuntu, Cantarell,
+            "Fira Sans", "Droid Sans",
+              /* OS X Yosemite */
+            "Helvetica Neue",
+              /* Generic */
+            sans-serif;
+  } @else {
+    font-family: $fonts;
+  }
+}

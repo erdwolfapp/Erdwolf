@@ -1,0 +1,46 @@
+$item-spacing: 4px !default;
+$outer-margin: 2px !default;
+$item-font-color: #00b !default;
+$current-item-font-color: #222 !default;
+$split-panel: 0 !default;
+$split-panel-color: #666 !default;
+
+header#app-header {
+  .app-name.next-to-nav {
+    padding-right: $outer-margin;
+    @if ($split-panel == 0) {
+      border-right: 1px solid $item-font-color;
+    }
+  }
+
+  & > .full-width.flex {
+    @if ($split-panel == 1) {
+      padding: 2px $outer-margin / 2;
+      border-radius: 2px;
+      background: $split-panel-color;
+    } @else {
+      margin: 0 $outer-margin;
+    }
+  }
+
+  /* Meta navigation */
+  #meta-nav {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+
+    a.nav-item {
+      display: block;
+      margin: 0 $item-spacing;
+      color: $item-font-color;
+      font-size: 1.2em;
+      font-weight: 600;
+      text-transform: uppercase;
+
+      &.current {
+        color: $current-item-font-color;
+        font-weight: 900;
+      }
+    }
+  }
+}

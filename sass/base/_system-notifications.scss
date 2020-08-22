@@ -1,0 +1,21 @@
+$base-color: #666 !default;
+$base-blend-in: 0.2 !default;;
+$level-mix-percent: 90% !default;
+/* Levels */
+$level-color-info: #00b !default;
+$level-color-warning: #bb0 !default;
+
+.system.notification {
+  margin: 0 3em 1em;
+  padding: 1.25em;
+  background: rgba($base-color, $base-blend-in);
+  border-radius: 6px;
+
+  &.info {
+    background: rgba(mix($base-color, $level-color-info, $level-mix-percent), $base-blend-in);
+  }
+
+  &.warning {
+    background: rgba(mix($base-color, $level-color-warning, $level-mix-percent), $base-blend-in);
+  }
+}

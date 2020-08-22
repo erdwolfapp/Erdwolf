@@ -1,0 +1,11 @@
+$border-color: #666 !default;
+
+.user-avatar {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid $border-color;
+  /* TODO: .user-avatar is a placeholder white box */
+  background: #fff;
+}

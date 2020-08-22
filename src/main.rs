@@ -19,7 +19,7 @@ use rocket_contrib::templates::Template;
 fn main() {
     rocket::ignite()
         .attach(Template::fairing())
-        .mount("/public", StaticFiles::from("css"))
+        .mount("/static", StaticFiles::from("assets"))
         .mount(
             "/",
             routes![

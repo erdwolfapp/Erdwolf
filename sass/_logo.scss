@@ -1,0 +1,20 @@
+$size: 24px !default;
+$spacing: 8px !default;
+
+.app-logo {
+  display: block;
+  width: $size;
+  height: $size;
+  padding: $spacing;
+  background: #dbedff;
+  border-radius: 50%;
+
+  img {
+    width: $size;
+    height: $size;
+  }
+}
+
+.app-name {
+  font-weight: 900;
+}

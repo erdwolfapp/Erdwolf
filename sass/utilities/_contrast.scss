@@ -1,0 +1,20 @@
+@use 'colors';
+@use 'utilities/brightness';
+
+@function adjust($color, $percent) {
+  @if (colors.$useDarkPalette) {
+    @return lighten($color, $percent);
+  }
+
+  @return darken($color, $percent);
+}
+
+@function adjustStandalone($color, $percent) {
+  $isDark: brightness.isColorDark($color);
+
+  @if ($isDark) {
+    @return lighten($color, $percent);
+  }
+
+  @return darken($color, $percent);
+}
