@@ -1,2 +1,7 @@
+# Build artifacts
 target/
+assets/css/*.css
+assets/css/*.map
+
+# Local databases
 erdwolf.db
