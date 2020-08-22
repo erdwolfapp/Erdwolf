@@ -1,0 +1,68 @@
+@use 'colors';
+@use 'utilities/contrast';
+
+/**
+  * Document body setup
+  */
+@use 'normalize.css/normalize.css';
+@use 'base/flex';
+@use 'base/size_classes';
+@use 'base/background' with (
+  $background-color: colors.$backgroundColor,
+  $font-color: contrast.adjust(colors.$backgroundColor, 80%)
+);
+@use 'base/typography' with (
+  $fonts: 'system'
+);
+@use 'base/user_avatar' with (
+  $border-color: contrast.adjust(background.$background-color, 40%)
+);
+@use 'base/buttons' with (
+  $background-color: desaturate(lighten(background.$background-color, 25%), 10%)
+);
+@use 'base/system-notifications' with (
+  $base-color: lighten(desaturate(background.$background-color, 50%), 55%),
+  $base-blend-in: 0.6,
+  $level-mix-percent: 30%,
+  $level-color-info: rgb(59, 150, 217),
+  $level-color-warning: rgb(211, 217, 35)
+);
+
+/**
+  * Erdwolf-specific setup
+  */
+@use 'logo' with (
+  $size: 36px
+);
+
+/**
+  * Modals (e.g. sign-in page) setup
+  */
+@use 'modals/geometry' as _modal_geometry with (
+  $background-color: desaturate(contrast.adjust(background.$background-color, 12%), 45%),
+  $font-color: background.$font-color
+);
+
+/**
+  * Dashboard header setup
+  */
+@use 'header/geometry' as _header_geometry with (
+  $outer-margin: 1.8em,
+  $action-panel-background-color: lighten(background.$background-color, 80%)
+);
+@use 'header/nav-geometry' with (
+  $item-spacing: 0.4em,
+  $outer-margin: _header_geometry.$outer-margin - 0.4em,
+  $item-font-color: darken(background.$font-color, 8%),
+  $current-item-font-color: background.$font-color,
+  $split-panel: 1,
+  $split-panel-color: contrast.adjust(background.$background-color, 10%)
+);
+
+/**
+  * Dashboard actions setup
+  */
+@use 'actions-list/geometry' as _action_list_geometry with (
+  $shelf-color: lighten(desaturate(background.$background-color, 50%), 55%),
+  $shelf-opacity: 0.2
+);

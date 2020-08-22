@@ -1,0 +1,9 @@
+@use 'utilities/brightness';
+
+/**
+ * Color setup
+ */
+$primaryColor: rgb(50, 88, 168);
+$secondaryColor: darken($primaryColor, 50%);
+$backgroundColor: mix(#000000, $primaryColor, 80%);
+$useDarkPalette: brightness.isColorDark($backgroundColor);

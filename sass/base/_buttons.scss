@@ -1,0 +1,24 @@
+@use 'utilities/contrast';
+$background-color: #ccc !default;
+$border-color: desaturate(lighten($background-color, 20%), 20%) !default;
+$font-color: contrast.adjustStandalone($background-color, 50%) !default;
+
+.button {
+  margin: 4px 0;
+  padding: 8px;
+  background: rgba($background-color, 0.5);
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  text-align: left;
+  transition: background .1s ease-in-out;
+
+  &, &:link, &:visited {
+    color: $font-color;
+    text-decoration: none;
+  }
+
+  &:hover, &:active {
+    background: lighten($background-color, 1%);
+    border-color: lighten($border-color, 10%);
+  }
+}
