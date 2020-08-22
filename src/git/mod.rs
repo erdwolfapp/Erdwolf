@@ -1,3 +1,5 @@
+use crate::utils::run_command;
+
 struct GitServer {}
 
 #[allow(unused)]
@@ -9,7 +11,7 @@ impl GitServer {
     /// Returns the version of GIT currently installed.
     /// For example: "2.28.0"
     pub fn get_local_git_version(&self) -> String {
-        let msg = self.run_command("git --version", "/");
+        let msg = run_command("git --version", "/");
         if let Ok(msg) = msg {
             msg.0.split("version ").collect::<Vec<&str>>()[1]
                 .trim()
@@ -36,7 +38,7 @@ impl GitServer {
                 "Unable to create a folder at: \"{}\"\nVerify that you have permissions!",
                 project_path.display()
             ));
-            let msg = self.run_command("git init --bare", &project_path.display().to_string());
+            let msg = run_command("git init --bare", &project_path.display().to_string());
             if let Err(msg) = msg {
                 return Err(format!(
                     "Something went wrong during project initialization: \n{}",
@@ -44,28 +46,6 @@ impl GitServer {
                 ));
             }
             Ok(format!("{}:{}", hostname, project_path.display()))
-        }
-    }
-
-    /// Run a command within a shell with a specified directory
-    fn run_command(&self, full_cmd: &str, dir: &str) -> Result<(String, String), String> {
-        use std::process::Command;
-        let mut splot = full_cmd.split(" ").collect::<Vec<&str>>();
-        splot.reverse();
-        let cmd = splot.pop().expect(&format!(
-            "Something went wrong when splitting command: \"{}\"",
-            full_cmd
-        ));
-        splot.reverse();
-        match Command::new(cmd).current_dir(dir).args(splot).output() {
-            Ok(output) => Ok((
-                String::from_utf8_lossy(&output.stdout).to_string(),
-                String::from_utf8_lossy(&output.stderr).to_string(),
-            )),
-            Err(_) => Err(format!(
-                "Something went wrong running command: \"{}\"!",
-                full_cmd
-            )),
         }
     }
 }

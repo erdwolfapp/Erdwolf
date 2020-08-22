@@ -10,8 +10,10 @@ pub mod db;
 pub mod forms;
 pub mod git;
 pub mod paths;
+pub mod podman;
 pub mod schema;
 pub mod template_models;
+pub mod utils;
 
 use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
