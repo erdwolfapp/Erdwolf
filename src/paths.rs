@@ -25,35 +25,43 @@ pub fn login() -> Template {
     Template::render("login", 0u32)
 }
 
-#[get("/register")]
-pub fn register() -> Result<Template, Redirect> {
+#[get("/register?<error>")]
+pub fn register(error: Option<u32>) -> Result<Template, Redirect> {
     dotenv().ok();
     if env::var("REGISTRATION_ENABLED").is_ok() {
         if env::var("REGISTRATION_ENABLED").unwrap() == "1" {
-            let mut registration = RegistrationTemplate {
-                invite_code_required: false,
-                invite_code: "".to_string(),
-            };
+            let mut registration = RegistrationTemplate::new();
             if env::var("REGISTRATION_INVITE_CODE_ONLY").is_ok() {
                 if env::var("REGISTRATION_INVITE_CODE_ONLY").unwrap() == "1" {
                     registration.invite_code_required = true;
                 }
             }
+            get_error(&mut registration, error);
             return Ok(Template::render("register", registration));
         }
     }
     Err(Redirect::to(uri!(index)))
 }
 
-#[get("/register/<code>")]
-pub fn register_with_code(code: Option<String>) -> Result<Template, Redirect> {
+fn get_error(template: &mut RegistrationTemplate, error_code: Option<u32>) {
+    if let Some(error_code) = error_code {
+        match error_code {
+            0 => template.error_invite_code_not_specified = true,
+            1 => template.error_invalid_invite_code = true,
+            2 => template.error_overused_invite_code = true,
+            3 => template.error_user_already_exists = true,
+            4 => template.error_confirmation_pass_doesnt_match = true,
+            _ => unimplemented!("Apparently we have a new error of number {}", error_code),
+        }
+    }
+}
+
+#[get("/register/<code>?<error>")]
+pub fn register_with_code(code: Option<String>, error: Option<u32>) -> Result<Template, Redirect> {
     dotenv().ok();
     if env::var("REGISTRATION_ENABLED").is_ok() {
         if env::var("REGISTRATION_ENABLED").unwrap() == "1" {
-            let mut registration = RegistrationTemplate {
-                invite_code_required: false,
-                invite_code: "".to_string(),
-            };
+            let mut registration = RegistrationTemplate::new();
             if env::var("REGISTRATION_INVITE_CODE_ONLY").is_ok() {
                 if env::var("REGISTRATION_INVITE_CODE_ONLY").unwrap() == "1" {
                     registration.invite_code_required = true;
@@ -62,6 +70,7 @@ pub fn register_with_code(code: Option<String>) -> Result<Template, Redirect> {
                     }
                 }
             }
+            get_error(&mut registration, error);
             return Ok(Template::render("register", registration));
         }
     }
@@ -71,7 +80,7 @@ pub fn register_with_code(code: Option<String>) -> Result<Template, Redirect> {
 #[get("/home")]
 pub fn home(mut cookies: Cookies) -> Result<Template, Redirect> {
     if let Some(_sid) = cookies.get_private("UID") {
-        //TODO: Add home stuff
+        // Add home stuff
         Ok(Template::render("home", 0u32))
     } else {
         Err(Redirect::to(uri!(index)))
@@ -119,8 +128,8 @@ pub fn register_api(mut cookies: Cookies, form: Form<RegisterForm>) -> Redirect 
         if env::var("REGISTRATION_INVITE_CODE_ONLY").is_ok() {
             if env::var("REGISTRATION_INVITE_CODE_ONLY").unwrap() == "1" {
                 if form.invite_code.is_none() || form.invite_code.unwrap().len() == 0 {
-                    //TODO: Invite code wasn't specified
-                    return Redirect::to(uri!(register));
+                    // Invite code wasn't specified
+                    return Redirect::to(uri!(register: 0));
                 }
                 use crate::schema::invite_codes::dsl::*;
                 let results = invite_codes
@@ -128,14 +137,14 @@ pub fn register_api(mut cookies: Cookies, form: Form<RegisterForm>) -> Redirect 
                     .load::<InviteCode>(&connection)
                     .expect("Error loading invite codes");
                 if results.len() != 1 {
-                    //TODO: Invalid invite_code
+                    // Invalid invite_code
                     let c = &form.invite_code.unwrap().to_string();
-                    return Redirect::to(uri!(register_with_code: c));
+                    return Redirect::to(uri!(register_with_code: c, 1));
                 }
                 let result = results.get(0).unwrap();
                 if result.max_usages <= result.times_used {
-                    //TODO: Overused invite_code
-                    return Redirect::to(uri!(register));
+                    // Overused invite_code
+                    return Redirect::to(uri!(register: 2));
                 }
                 diesel::update(invite_codes.filter(code.eq(form.invite_code.unwrap().to_string())))
                     .set(times_used.eq(result.times_used + 1))
@@ -149,9 +158,13 @@ pub fn register_api(mut cookies: Cookies, form: Form<RegisterForm>) -> Redirect 
             .filter(username.eq(form.username.to_string()))
             .load::<User>(&connection)
             .expect("Error loading users");
-        if results.len() >= 1 || form.password != form.repeat_password {
-            //TODO: Wrong confirmation password or user already exists
-            return Redirect::to(uri!(register));
+        if results.len() >= 1 {
+            // User already exists
+            return Redirect::to(uri!(register: 3));
+        }
+        if form.password != form.repeat_password {
+            // Confirmation password doesn't match
+            return Redirect::to(uri!(register: 4));
         } else {
             let salt: String = thread_rng()
                 .sample_iter(&rand::distributions::Alphanumeric)
@@ -185,7 +198,7 @@ pub fn register_api(mut cookies: Cookies, form: Form<RegisterForm>) -> Redirect 
             return Redirect::to(uri!(home));
         }
     } else {
-        //TODO: Registration isn't enabled
+        // Registration isn't enabled
         return Redirect::to(uri!(index));
     }
 }

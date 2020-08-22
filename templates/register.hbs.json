@@ -1,4 +1,9 @@
 {
     "invite_code_required": true,
-    "invite_code": "1234567890"
+    "invite_code": "1234567890",
+    "error_invite_code_not_specified": false,
+    "error_invalid_invite_code": false,
+    "error_overused_invite_code": false,
+    "error_user_already_exists": false,
+    "error_confirmation_pass_doesnt_match": false
 }

@@ -11,25 +11,84 @@
         <div class="center gray">
             <form action="/api/register" method="POST">
                 <table>
+                    {{#if error_user_already_exists}}
+                    <tr>
+                        <td><label class="error" for="username">Username: </label></td>
+                        <td><input class="error" id="username" name="username" type="text"></td>
+                        <td>
+                            <p class="error_text">User already exists!</p>
+                        </td>
+                    </tr>
+                    {{else}}
                     <tr>
                         <td><label for="username">Username: </label></td>
                         <td><input id="username" name="username" type="text"></td>
                     </tr>
+                    {{/if}}
                     <tr>
                         <td><label for="password">Password: </label></td>
                         <td><input id="password" name="password" type="password"></td>
                     </tr>
+                    {{#if error_confirmation_pass_doesnt_match}}
+                    <tr>
+                        <td><label class="error" for="rpassword">Repeat password: </label></td>
+                        <td><input class="error" id="rpassword" name="repeat_password" type="password"></td>
+                        <td>
+                            <p class="error_text">Password doesn't match!</p>
+                        </td>
+                    </tr>
+                    {{else}}
                     <tr>
                         <td><label for="rpassword">Repeat password: </label></td>
                         <td><input id="rpassword" name="repeat_password" type="password"></td>
                     </tr>
+                    {{/if}}
                     {{#if invite_code_required}}
                     <tr>
+                        {{#if error_invite_code_not_specified}}
+                        <td><label class="error" for="invitecode">Invite code: </label></td>
+                        {{#if invite_code}}
+                        <td><input class="error" id="invitecode" name="invite_code" type="text" value="{{invite_code}}">
+                        </td>
+                        {{else}}
+                        <td><input class="error" id="invitecode" name="invite_code" type="text"></td>
+                        {{/if}}
+                        <td>
+                            <p class="error_text">Invite code left empty!</p>
+                        </td>
+                        {{else}}
+                        {{#if error_invalid_invite_code}}
+                        <td><label class="error" for="invitecode">Invite code: </label></td>
+                        {{#if invite_code}}
+                        <td><input class="error" id="invitecode" name="invite_code" type="text" value="{{invite_code}}">
+                        </td>
+                        {{else}}
+                        <td><input class="error" id="invitecode" name="invite_code" type="text"></td>
+                        {{/if}}
+                        <td>
+                            <p class="error_text">Invalid invite code!</p>
+                        </td>
+                        {{else}}
+                        {{#if error_overused_invite_code}}
+                        <td><label class="error" for="invitecode">Invite code: </label></td>
+                        {{#if invite_code}}
+                        <td><input class="error" id="invitecode" name="invite_code" type="text" value="{{invite_code}}">
+                        </td>
+                        {{else}}
+                        <td><input class="error" id="invitecode" name="invite_code" type="text"></td>
+                        {{/if}}
+                        <td>
+                            <p class="error_text">Overused invite code!</p>
+                        </td>
+                        {{else}}
                         <td><label for="invitecode">Invite code: </label></td>
                         {{#if invite_code}}
                         <td><input id="invitecode" name="invite_code" type="text" value="{{invite_code}}"></td>
                         {{else}}
                         <td><input id="invitecode" name="invite_code" type="text"></td>
+                        {{/if}}
+                        {{/if}}
+                        {{/if}}
                         {{/if}}
                     </tr>
                     <tr>
