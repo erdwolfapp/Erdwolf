@@ -1,0 +1,53 @@
+@use 'utilities/contrast';
+@use 'colors';
+@use 'accel/accel';
+
+$background-color: #ccc !default;
+$font-color: #222 !default;
+$spacing-inside: 2rem !default;
+$margin-inside: 1.2em !default;
+$field-color: contrast.adjustStandalone(desaturate($background-color, 30%), 20%) !default;
+
+.modal-container {
+    @include accel.flex($x: center, $y: center);
+    height: 100%;
+
+    .modal {
+        position: relative;
+        margin: 1rem 0;
+        padding: 0 0 $margin-inside;
+        max-width: 500px;
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid colors.$accentColor;
+        color: $font-color;
+        overflow-y: auto;
+
+        .modal-header {
+            @include accel.flex($x: center, $y: center);
+            padding: $margin-inside 0 $margin-inside;
+            border-bottom: 1px solid colors.$accentColor;
+            background: colors.$accentColor;
+        }
+
+        .modal-content {
+            margin: 0 1em;
+            padding: $margin-inside 0;
+
+            h1,
+            h2,
+            h3,
+            label,
+            p {
+                margin: 3px $spacing-inside;
+            }
+
+            label {
+                display: block;
+                margin: 6px 0;
+                font-size: 1.2em;
+                font-weight: 700;
+            }
+        }
+    }
+}
