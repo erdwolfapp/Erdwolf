@@ -1,7 +1,8 @@
-@use 'utilities/contrast';
+@use 'accel/accel';
+
 $background-color: #ccc !default;
 $border-color: desaturate(lighten($background-color, 20%), 20%) !default;
-$font-color: contrast.adjustStandalone($background-color, 50%) !default;
+$font-color: accel.adjustColor($background-color, 50%) !default;
 
 .button {
   margin: 4px 0;
@@ -10,14 +11,17 @@ $font-color: contrast.adjustStandalone($background-color, 50%) !default;
   border: 1px solid $border-color;
   border-radius: 4px;
   text-align: left;
-  transition: background .1s ease-in-out;
+  transition: background 0.1s ease-in-out;
 
-  &, &:link, &:visited {
+  &,
+  &:link,
+  &:visited {
     color: $font-color;
     text-decoration: none;
   }
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     background: lighten($background-color, 1%);
     border-color: lighten($border-color, 10%);
   }

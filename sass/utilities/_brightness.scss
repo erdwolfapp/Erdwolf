@@ -1,7 +1,13 @@
+// TODO: stub, replaced by accel
+@use 'accel/accel';
+@warn "Deprecated module loaded: utilities/brightness; replaced with accel";
+
 @function getColorBrightness($color) {
-  @return (red($color) + green($color) + blue($color)) / (255 * 3);
+  @warn "Deprecated function used: utilities/brightness/getColorBrightness";
+  @return accel.getColorBrightness($color);
 }
 
 @function isColorDark($color) {
-  @return getColorBrightness($color) <= 0.5;
+  @warn "Deprecated function used: utilities/brightness/isColorDark";
+  @return accel.isColorDark($color);
 }

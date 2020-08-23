@@ -1,20 +1,13 @@
-@use 'colors';
-@use 'utilities/brightness';
+// TODO: stub, replaced by accel
+@use 'accel/accel';
+@warn "Deprecated module loaded: utilities/contrast; replaced with accel";
 
 @function adjust($color, $percent) {
-  @if (colors.$useDarkPalette) {
-    @return lighten($color, $percent);
-  }
-
-  @return darken($color, $percent);
+  @warn "Deprecated function used: utilities/contrast/adjust";
+  @return accel.adjustColor($color, $percent, true);
 }
 
 @function adjustStandalone($color, $percent) {
-  $isDark: brightness.isColorDark($color);
-
-  @if ($isDark) {
-    @return lighten($color, $percent);
-  }
-
-  @return darken($color, $percent);
+  @warn "Deprecated function used: utilities/contrast/adjustStandalone";
+  @return accel.adjustColor($color, $percent, false);
 }

@@ -1,5 +1,5 @@
 @use 'colors';
-@use 'utilities/contrast';
+@use 'accel/accel';
 
 /**
   * Document body setup
@@ -9,13 +9,13 @@
 @use 'base/size_classes';
 @use 'base/background' with (
   $background-color: colors.$backgroundColor,
-  $font-color: contrast.adjust(colors.$backgroundColor, 80%)
+  $font-color: accel.adjustColor(colors.$backgroundColor, 80%, true)
 );
 @use 'base/typography' with (
   $fonts: 'system'
 );
 @use 'base/user_avatar' with (
-  $border-color: contrast.adjust(background.$background-color, 40%)
+  $border-color: accel.adjustColor(background.$background-color, 40%, true)
 );
 @use 'base/buttons' with (
   $background-color: desaturate(lighten(background.$background-color, 25%), 10%)
@@ -38,25 +38,25 @@
 /**
   * Modals (e.g. sign-in page) setup
   */
-@use 'modals/geometry' as _modal_geometry with (
-  $background-color: desaturate(contrast.adjust(background.$background-color, 12%), 45%),
+@use 'widgets/modals' as _modal_geometry with (
+  $background-color: desaturate(accel.adjustColor(background.$background-color, 12%, true), 45%),
   $font-color: background.$font-color
 );
 
 /**
   * Dashboard header setup
   */
-@use 'header/geometry' as _header_geometry with (
+@use 'widgets/header' as _header_geometry with (
   $outer-margin: 1.8em,
   $action-panel-background-color: lighten(background.$background-color, 80%)
 );
-@use 'header/nav-geometry' with (
+@use 'widgets/topnav' with (
   $item-spacing: 0.4em,
   $outer-margin: _header_geometry.$outer-margin - 0.4em,
   $item-font-color: darken(background.$font-color, 8%),
   $current-item-font-color: background.$font-color,
   $split-panel: 1,
-  $split-panel-color: contrast.adjust(background.$background-color, 10%)
+  $split-panel-color: accel.adjustColor(background.$background-color, 10%, true)
 );
 
 /**

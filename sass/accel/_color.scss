@@ -1,0 +1,27 @@
+@use 'colors';
+
+@function getColorBrightness($color) {
+    @return (red($color) + green($color) + blue($color)) / (255 * 3);
+}
+
+@function isColorDark($color) {
+    @return getColorBrightness($color) <= 0.5;
+}
+
+@function adjustColor($color, $percent, $flat: false) {
+    @if $flat {
+        @if (colors.$useDarkPalette) {
+            @return lighten($color, $percent);
+        }
+
+        @return darken($color, $percent);
+    } @else {
+        $isDark: isColorDark($color);
+
+        @if ($isDark) {
+            @return lighten($color, $percent);
+        }
+
+        @return darken($color, $percent);
+    }
+}
