@@ -1,0 +1,12 @@
+@use 'config/document';
+@use 'config/colors';
+@use 'accel/accel';
+
+$bgColor: desaturate(accel.adjustColor(document.$bgColor, 12%, true), 45%);
+$fgColor: document.$fgColor;
+$fieldColor: accel.adjustColor(desaturate($bgColor, 30%), 20%);
+$headerColor: colors.$accentColor;
+$modalColor: colors.$accentColor;
+
+$stdMargin: 1.2em;
+$stdSpacing: 0.6rem;

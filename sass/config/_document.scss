@@ -1,0 +1,5 @@
+@use 'config/colors';
+@use 'accel/accel';
+
+$bgColor: colors.$bgColor;
+$fgColor: accel.adjustColor(colors.$bgColor, 80%, true);

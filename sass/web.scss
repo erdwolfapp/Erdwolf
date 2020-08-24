@@ -7,10 +7,7 @@
 @use 'normalize.css/normalize.css';
 @use 'base/flex';
 @use 'base/size_classes';
-@use 'base/background' with (
-  $background-color: colors.$backgroundColor,
-  $font-color: accel.adjustColor(colors.$backgroundColor, 80%, true)
-);
+@use 'base/background';
 @use 'base/typography' with (
   $fonts: 'system'
 );
@@ -38,10 +35,7 @@
 /**
   * Modals (e.g. sign-in page) setup
   */
-@use 'widgets/modals' as _modal_geometry with (
-  $background-color: desaturate(accel.adjustColor(background.$background-color, 12%, true), 45%),
-  $font-color: background.$font-color
-);
+@use 'widgets/modals' as _modal_geometry;
 
 /**
   * Dashboard header setup
@@ -58,6 +52,7 @@
   $split-panel: 1,
   $split-panel-color: accel.adjustColor(background.$background-color, 10%, true)
 );
+@use 'widgets/input';
 
 /**
   * Dashboard actions setup

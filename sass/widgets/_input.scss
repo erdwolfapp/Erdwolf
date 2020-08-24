@@ -1,0 +1,26 @@
+.input-group {
+    position: relative;
+
+    label {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 2em;
+        transform: translatey(-50%);
+    }
+
+    input {
+        width: 100%;
+        border-radius: 12px;
+        padding: 0.8em 0.5em;
+
+        &[type="text"],
+        &[type="password"] {
+            border: 1px solid #ddd;
+        }
+    }
+}
+
+.modal-content .input-group {
+    margin: 6px 10px;
+}

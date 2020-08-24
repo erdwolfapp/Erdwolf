@@ -1,6 +1,18 @@
-@mixin flex($direction: "row", $x: "start", $y: "start") {
+@mixin width($min: -1, $request: -1, $max: -1) {
+    min-width: if($min > 0, $min, null);
+    width: if($request > 0, $request, null);
+    max-width: if($max > 0, $max, null);
+}
+
+@mixin flex($direction: "row", $x: "default", $y: "default", $wrap: null) {
+    $x: if($x != "default", $x, null);
+    $y: if($y != "default", $y, null);
+
     display: flex;
-    flex-direction: if($direction, "row", null);
+    flex: {
+        wrap: $wrap;
+        direction: if($direction != "row", $direction, null);
+    }
 
     @if $direction == "column" {
         align-items: $x;
@@ -8,5 +20,7 @@
     } @else if $direction == "row" {
         align-items: $y;
         justify-content: $x;
+    } @else {
+        @warn Unsupported flex direction of $direction;
     }
 }
