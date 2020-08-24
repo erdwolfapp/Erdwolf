@@ -1,11 +1,19 @@
-$background-color: #fff !default;
-$font-color: #000 !default;
+@use 'config/document' as cfg;
 
-html, body {
+html,
+body {
   min-height: 100vh;
 }
 
 body {
-  background: $background-color;
-  color: $font-color;
+  background: cfg.$bgColor;
+  color: cfg.$fgColor;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+@warn "Deprecated properties below. Migrate to config.";
+$background-color: cfg.$bgColor;
+$font-color: cfg.$fgColor;

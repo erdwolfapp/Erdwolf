@@ -1,0 +1,8 @@
+/**
+ * Color setup
+ */
+$primaryColor: rgb(50, 88, 168);
+$secondaryColor: darken($primaryColor, 50%);
+$bgColor: mix(#000000, $primaryColor, 80%);
+$accentColor: #1960b1;
+$useDarkPalette: true;

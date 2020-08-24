@@ -1,8 +1,2 @@
-/**
- * Color setup
- */
-$primaryColor: rgb(50, 88, 168);
-$secondaryColor: darken($primaryColor, 50%);
-$backgroundColor: mix(#000000, $primaryColor, 80%);
-$accentColor: #1960b1;
-$useDarkPalette: true;
+@forward 'config/colors';
+@warn 'Deprecated module loaded: colors; replaced with config/colors';

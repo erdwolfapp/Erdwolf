@@ -1,30 +1,30 @@
-<html>
+{{#> layouts/modal_page }}
+<div class="modal-header">
+    <img src="/static/svg/app.svg" class="app-logo" alt="Erdwolf" />
+    <h1 class="app-name">Erdwolf</h1>
+</div>
 
-<head>
-    <title>ErdWolf - Login</title>
-    <link rel="stylesheet" href="/public/theme.css">
-</head>
+<div class="modal-content">
+    <h2 class="section-title">Sign in</h2>
 
-<body>
-    <div class="container dark_gray">
-        <div class="center gray">
-            <form action="/api/login" method="POST">
-                <table>
-                    <tr>
-                        <td><label for="username">Username: </label></td>
-                        <td><input id="username" name="username" type="text"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="password">Password: </label></td>
-                        <td><input id="password" name="password" type="password"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><button type="submit" class="submit">Login</button></td>
-                    </tr>
-                </table>
-            </form>
+    <form action="/api/login" method="POST">
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text">
         </div>
-    </div>
-</body>
 
-</html>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password">
+        </div>
+
+        <div class="input-group">
+            <input type="submit" value="Log in to your Account" />
+        </div>
+    </form>
+
+    <div class="flex justify-content-between wrap">
+        <a href="/register">Have an invite code?</a>
+    </div>
+</div>
+{{/ layouts/modal_page }}

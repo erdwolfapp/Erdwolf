@@ -1,53 +1,50 @@
-@use 'utilities/contrast';
-@use 'colors';
+@use 'config/modals' as cfg;
 @use 'accel/accel';
 
-$background-color: #ccc !default;
-$font-color: #222 !default;
-$spacing-inside: 2rem !default;
-$margin-inside: 1.2em !default;
-$field-color: contrast.adjustStandalone(desaturate($background-color, 30%), 20%) !default;
-
 .modal-container {
-    @include accel.flex($x: center, $y: center);
+    @include accel.flex($direction: row, $x: center, $y: center);
     height: 100%;
+}
 
-    .modal {
-        position: relative;
-        margin: 1rem 0;
-        padding: 0 0 $margin-inside;
-        max-width: 500px;
-        width: 100%;
-        border-radius: 8px;
-        border: 1px solid colors.$accentColor;
-        color: $font-color;
-        overflow-y: auto;
+.modal {
+    @include accel.width(-1, 100%, 500px);
+    position: relative;
+    margin: 1rem 0;
+    border-radius: 8px;
+    border: 1px solid cfg.$modalColor;
+    color: cfg.$fgColor;
+    overflow-y: auto;
+
+    &.modal-paned {
+        @include accel.flex();
+        max-width: 750px;
 
         .modal-header {
-            @include accel.flex($x: center, $y: center);
-            padding: $margin-inside 0 $margin-inside;
-            border-bottom: 1px solid colors.$accentColor;
-            background: colors.$accentColor;
+            @include accel.width(-1, 100%, 40%);
         }
 
         .modal-content {
-            margin: 0 1em;
-            padding: $margin-inside 0;
+            width: 100%;
+        }
+    }
 
-            h1,
-            h2,
-            h3,
-            label,
-            p {
-                margin: 3px $spacing-inside;
-            }
+    .modal-header {
+        @include accel.flex($direction: column, $x: center, $y: center);
+        padding: cfg.$stdMargin 0;
+        border-bottom: 1px solid cfg.$headerColor;
+        background: cfg.$headerColor;
+    }
 
-            label {
-                display: block;
-                margin: 6px 0;
-                font-size: 1.2em;
-                font-weight: 700;
-            }
+    .modal-content {
+        margin: 0 1em;
+        padding: cfg.$stdMargin cfg.$stdSpacing;
+
+        .section-title {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.7em;
+            font-weight: 700;
+            color: #fff;
         }
     }
 }
