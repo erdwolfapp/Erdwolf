@@ -83,7 +83,7 @@ pub fn home(mut cookies: Cookies) -> Result<Template, Redirect> {
         // Add home stuff
         Ok(Template::render("home", 0u32))
     } else {
-        Err(Redirect::to(uri!(index)))
+        Err(Redirect::to(uri!(login)))
     }
 }
 
