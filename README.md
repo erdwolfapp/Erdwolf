@@ -7,6 +7,7 @@ The project is based on `Rust` and uses [rocket.rs](https://rocket.rs) for the w
 You can build the server from sources for yourself.
 
 ## Prerequisites
+- [Few basic requirements](#basic-requirements)
 - Rust nightly (1.47+) (Older versions might work, but weren't tested)
 - SQLite libraries (`sqlite-sys` needs them)
 
@@ -24,9 +25,9 @@ You can build the server from sources for yourself.
     git clone https://github.com/erdwolfapp/Erdwolf.git
     ```
 
-- Install `diesel-cli` which you're going to need for DB creation. Feel free to remove arguments if you want to use it for other types of databases.
+- Install `diesel_cli` which you're going to need for DB creation. Feel free to remove arguments if you want to use it for other types of databases.
     ```
-    cargo install diesel-cli --no-default-features --features="sqlite"
+    cargo install diesel_cli --no-default-features --features="sqlite"
     ```
 
 - Add `~/.cargo/bin` to your PATH (If you're on Linux)
@@ -48,9 +49,9 @@ TBD
     git clone https://github.com/erdwolfapp/Erdwolf.git
     ```
 
-- Install `diesel-cli` which you're going to need for DB creation
+- Install `diesel_cli` which you're going to need for DB creation
     ```
-    cargo install diesel-cli
+    cargo install diesel_cli --no-default-features --features="sqlite"
     ```
 
 - Add `~/.cargo/bin` to your PATH (If you're on Linux)
@@ -62,3 +63,23 @@ TBD
     ```
     cargo run
     ```
+
+
+## Basic requirements
+Requirements have been tested on bare docker containers for the matching distribution. All of them might not be neccessary for a successful build.
+
+If you find that packages aren't needed, please post an issue.
+### Arch linux
+```
+# pacman -S curl git clang pkgconfig
+```
+
+### Void Linux
+```
+# xbps-install curl git clang gcc pkg-config libclang libargon2-devel libressl-devel sqlite-devel
+```
+
+### Debian/Ubuntu
+```
+# apt install curl git clang libsqlite3-dev librust-openssl-dev
+```
