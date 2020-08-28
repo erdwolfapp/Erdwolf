@@ -1,4 +1,4 @@
-{{#> layouts/modal_page }}
+{{#*inline "page" }}
 <div class="modal-header">
     <img src="/static/svg/app.svg" class="app-logo" alt="Erdwolf" />
     <h1 class="app-name">Erdwolf</h1>
@@ -9,13 +9,13 @@
 
     <form action="/api/login" method="POST">
         <div class="input-group">
+            <input id="username" required=true name="username" type="text">
             <label for="username">Username</label>
-            <input id="username" name="username" type="text">
         </div>
 
         <div class="input-group">
+            <input id="password" required=true name="password" type="password">
             <label for="password">Password</label>
-            <input id="password" name="password" type="password">
         </div>
 
         <div class="input-group">
@@ -27,4 +27,5 @@
         <a href="/register">Have an invite code?</a>
     </div>
 </div>
-{{/ layouts/modal_page }}
+{{/inline}}
+{{~> layouts/modal_page ~}}
