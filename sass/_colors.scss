@@ -1,2 +1,4 @@
 @forward 'config/colors';
 @warn 'Deprecated module loaded: colors; replaced with config/colors';
+
+$backgroundColor: $bgColor;

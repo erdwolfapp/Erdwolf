@@ -1,8 +1,28 @@
+$theme: "dark";
+
 /**
  * Color setup
  */
+// Dark theme
 $primaryColor: rgb(50, 88, 168);
 $secondaryColor: darken($primaryColor, 50%);
 $bgColor: mix(#000000, $primaryColor, 80%);
 $accentColor: #1960b1;
 $useDarkPalette: true;
+
+@if $theme == "light" {
+    $primaryColor: rgb(216, 229, 238);
+    $secondaryColor: darken($primaryColor, 50%);
+    $bgColor: mix(#ffffff, $primaryColor, 90%);
+    $accentColor: #1960b1;
+    $useDarkPalette: false;
+} @else if $theme == "green" {
+    $primaryColor: rgb(83, 184, 60);
+    $secondaryColor: darken($primaryColor, 50%);
+    $bgColor: mix(#ffffff, $primaryColor, 30%);
+    $accentColor: #1960b1;
+    $useDarkPalette: false;
+}
+
+$accel_useStdColorAdjust: true;
+$accel_allowA11y: true;

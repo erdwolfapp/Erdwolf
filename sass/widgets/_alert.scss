@@ -1,0 +1,10 @@
+.alert {
+    margin: 1em 0;
+    padding: 0.5em 0.8em;
+    border-radius: 4px;
+    font-size: 102%;
+
+    &.alert-error {
+        background: #aa1f1f;
+    }
+}

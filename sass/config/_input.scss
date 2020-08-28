@@ -1,0 +1,7 @@
+@use 'config/colors';
+@use 'accel/accel';
+
+$submitBorderColor: accel.adjustColor(colors.$accentColor, $lightness: 40%);
+$submitBgColor: $submitBorderColor;
+$submitFgColor: accel.adjustColor($submitBgColor, $saturation: -60%, $lightness: 60%, $a11y: "AAA");
+$labelFgColorInactive: accel.adjustColor($submitBorderColor, $lightness: 30%, $saturation: -60%);

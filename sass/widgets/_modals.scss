@@ -12,6 +12,7 @@
     margin: 1rem 0;
     border-radius: 8px;
     border: 1px solid cfg.$modalColor;
+    background: cfg.$bgColor;
     color: cfg.$fgColor;
     overflow-y: auto;
 
@@ -31,8 +32,9 @@
     .modal-header {
         @include accel.flex($direction: column, $x: center, $y: center);
         padding: cfg.$stdMargin 0;
-        border-bottom: 1px solid cfg.$headerColor;
-        background: cfg.$headerColor;
+        border-bottom: 1px solid cfg.$headerBgColor;
+        background: cfg.$headerBgColor;
+        color: cfg.$headerFgColor;
     }
 
     .modal-content {

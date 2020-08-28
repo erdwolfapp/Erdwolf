@@ -1,4 +1,3 @@
-@use 'colors';
 @use 'accel/accel';
 
 /**
@@ -53,6 +52,7 @@
   $split-panel-color: accel.adjustColor(background.$background-color, 10%, true)
 );
 @use 'widgets/input';
+@use 'widgets/alert';
 
 /**
   * Dashboard actions setup

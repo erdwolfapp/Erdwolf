@@ -1,22 +1,47 @@
+@use 'config/input' as cfg;
+
 .input-group {
     position: relative;
 
     label {
         display: block;
         position: absolute;
-        top: 50%;
+        top: 0;
         left: 2em;
+        line-height: 1;
         transform: translatey(-50%);
+
+        color: cfg.$labelFgColorInactive;
+        background: #fff;
+        pointer-events: none;
+        transition: all 0.2s ease-in-out;
     }
 
     input {
         width: 100%;
-        border-radius: 12px;
-        padding: 0.8em 0.5em;
+        border-radius: 0.6em;
+        padding: 0.8em 1.5em;
 
         &[type="text"],
         &[type="password"] {
             border: 1px solid #ddd;
+        }
+
+        &[type="submit"] {
+            border: 2px solid cfg.$submitBorderColor;
+            background: cfg.$submitBgColor;
+            color: cfg.$submitFgColor;
+        }
+
+        &:invalid + label {
+            top: 50%;
+        }
+
+        &:valid + label,
+        &:focus + label {
+            top: 0;
+            font-size: 90%;
+            padding: 0 0.5em;
         }
     }
 }

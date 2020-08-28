@@ -2,10 +2,11 @@
 @use 'config/colors';
 @use 'accel/accel';
 
-$bgColor: desaturate(accel.adjustColor(document.$bgColor, 12%, true), 45%);
-$fgColor: document.$fgColor;
-$fieldColor: accel.adjustColor(desaturate($bgColor, 30%), 20%);
-$headerColor: colors.$accentColor;
+$bgColor: accel.adjustColor(document.$bgColor, $flat: true, $lightness: 13%, $saturation: -45%);
+$fgColor: accel.adjustColor($bgColor, $lightness: 70%, $saturation: -45%, $a11y: "AAA");
+$fieldColor: accel.adjustColor($bgColor, $saturation: -30%, $lightness: 40%);
+$headerBgColor: colors.$accentColor;
+$headerFgColor: accel.adjustColor($headerBgColor, $saturation: -40%, $lightness: 90%, $a11y: null);
 $modalColor: colors.$accentColor;
 
 $stdMargin: 1.2em;
