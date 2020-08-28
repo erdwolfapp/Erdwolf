@@ -1,4 +1,6 @@
-@use 'colors';
+@use 'config/colors';
+@use 'accel/contrast';
+@use 'sass:color';
 
 @function getColorBrightness($color) {
     @return (red($color) + green($color) + blue($color)) / (255 * 3);
@@ -8,20 +10,54 @@
     @return getColorBrightness($color) <= 0.5;
 }
 
-@function adjustColor($color, $percent, $flat: false) {
-    @if $flat {
-        @if (colors.$useDarkPalette) {
-            @return lighten($color, $percent);
-        }
-
-        @return darken($color, $percent);
+@function darkenColor($color, $percent) {
+    @if colors.$accel_useStdColorAdjust {
+        $percent: $percent * -1;
+        @return color.adjust($color, $lightness: $percent);
     } @else {
-        $isDark: isColorDark($color);
-
-        @if ($isDark) {
-            @return lighten($color, $percent);
-        }
-
         @return darken($color, $percent);
     }
+}
+
+@function lightenColor($color, $percent) {
+    @if colors.$accel_useStdColorAdjust {
+        @return color.adjust($color, $lightness: $percent);
+    } @else {
+        @return lighten($color, $percent);
+    }
+}
+
+@function _adjustColor($color, $percent: null, $flat: false, $saturation: 0%, $lightness: 0%) {
+    @if $percent != null {
+        @warn "Deprecated property scheme of accel.adjustColor used.";
+        @if $flat {
+            @if (colors.$useDarkPalette) {
+                @return lightenColor($color, $percent);
+            }
+
+            @return darkenColor($color, $percent);
+        } @else {
+            $isDark: isColorDark($color);
+
+            @if ($isDark) {
+                @return lightenColor($color, $percent);
+            }
+
+            @return darkenColor($color, $percent);
+        }
+    }
+
+    @if not $flat {
+        $lightness: if(isColorDark($color), 1, -1) * $lightness;
+    }
+
+    @return color.scale($color, $saturation: $saturation, $lightness: $lightness);
+}
+
+@function adjustColor($color, $percent: null, $flat: false, $saturation: 0%, $lightness: 0%, $a11y: null) {
+    $result: _adjustColor($color, $percent, $flat, $saturation, $lightness);
+    @if $a11y != null and not contrast.doesMeetGuidelines($result, $color, $level: $a11y) {
+        @warn "#{$result} does not meet the #{$a11y} guidelines against #{$color}";
+    }
+    @return $result;
 }
