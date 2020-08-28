@@ -1,5 +1,6 @@
 @use 'config/colors';
 @use 'accel/accel';
 
+$defaultFontSize: 16px;
 $bgColor: colors.$bgColor;
-$fgColor: accel.adjustColor(colors.$bgColor, 80%, true);
+$fgColor: accel.adjustColor($bgColor, $lightness: 80%, $a11y: "AAA");
