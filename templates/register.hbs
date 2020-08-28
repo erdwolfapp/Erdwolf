@@ -1,109 +1,74 @@
-<html>
+{{#*inline "page" }}
+<div class="modal-header">
+    <img src="/static/svg/app.svg" class="app-logo" alt="Erdwolf" />
+    <h1 class="app-name">Erdwolf</h1>
+</div>
 
-<head>
-    <title>ErdWolf - Login</title>
-    <link rel="stylesheet" href="/public/theme.css">
-    </style>
-</head>
+<div class="modal-content">
+    <h2 class="section-title">Create an account</h2>
 
-<body>
-    <div class="container dark_gray">
-        <div class="center gray">
-            <form action="/api/register" method="POST">
-                <table>
-                    {{#if error_user_already_exists}}
-                    <tr>
-                        <td><label class="error" for="username">Username: </label></td>
-                        <td><input class="error" id="username" name="username" type="text"></td>
-                        <td>
-                            <p class="error_text">User already exists!</p>
-                        </td>
-                    </tr>
-                    {{else}}
-                    <tr>
-                        <td><label for="username">Username: </label></td>
-                        <td><input id="username" name="username" type="text"></td>
-                    </tr>
-                    {{/if}}
-                    <tr>
-                        <td><label for="password">Password: </label></td>
-                        <td><input id="password" name="password" type="password"></td>
-                    </tr>
-                    {{#if error_confirmation_pass_doesnt_match}}
-                    <tr>
-                        <td><label class="error" for="rpassword">Repeat password: </label></td>
-                        <td><input class="error" id="rpassword" name="repeat_password" type="password"></td>
-                        <td>
-                            <p class="error_text">Password doesn't match!</p>
-                        </td>
-                    </tr>
-                    {{else}}
-                    <tr>
-                        <td><label for="rpassword">Repeat password: </label></td>
-                        <td><input id="rpassword" name="repeat_password" type="password"></td>
-                    </tr>
-                    {{/if}}
-                    {{#if invite_code_required}}
-                    <tr>
-                        {{#if error_invite_code_not_specified}}
-                        <td><label class="error" for="invitecode">Invite code: </label></td>
-                        {{#if invite_code}}
-                        <td><input class="error" id="invitecode" name="invite_code" type="text" value="{{invite_code}}">
-                        </td>
-                        {{else}}
-                        <td><input class="error" id="invitecode" name="invite_code" type="text"></td>
-                        {{/if}}
-                        <td>
-                            <p class="error_text">Invite code left empty!</p>
-                        </td>
-                        {{else}}
-                        {{#if error_invalid_invite_code}}
-                        <td><label class="error" for="invitecode">Invite code: </label></td>
-                        {{#if invite_code}}
-                        <td><input class="error" id="invitecode" name="invite_code" type="text" value="{{invite_code}}">
-                        </td>
-                        {{else}}
-                        <td><input class="error" id="invitecode" name="invite_code" type="text"></td>
-                        {{/if}}
-                        <td>
-                            <p class="error_text">Invalid invite code!</p>
-                        </td>
-                        {{else}}
-                        {{#if error_overused_invite_code}}
-                        <td><label class="error" for="invitecode">Invite code: </label></td>
-                        {{#if invite_code}}
-                        <td><input class="error" id="invitecode" name="invite_code" type="text" value="{{invite_code}}">
-                        </td>
-                        {{else}}
-                        <td><input class="error" id="invitecode" name="invite_code" type="text"></td>
-                        {{/if}}
-                        <td>
-                            <p class="error_text">Overused invite code!</p>
-                        </td>
-                        {{else}}
-                        <td><label for="invitecode">Invite code: </label></td>
-                        {{#if invite_code}}
-                        <td><input id="invitecode" name="invite_code" type="text" value="{{invite_code}}"></td>
-                        {{else}}
-                        <td><input id="invitecode" name="invite_code" type="text"></td>
-                        {{/if}}
-                        {{/if}}
-                        {{/if}}
-                        {{/if}}
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Invite code is needed for this server, please contact an admin for one.</p>
-                        </td>
-                    </tr>
-                    {{/if}}
-                    <tr>
-                        <td colspan="2"><button type="submit" class="submit">Register</button></td>
-                    </tr>
-                </table>
-            </form>
+    {{#if error_invite_code_not_specified}}
+    {{> common/message
+        level="error" caption="Error"
+        message="Local policy does not allow registration without an invite code.
+                 Contact your administrator if you have not received one." }}
+    {{/if}}
+
+    {{#if error_invalid_invite_code}}
+    {{> common/message
+        level="error" caption="Error"
+        message="Provided invite code is invalid." }}
+    {{/if}}
+
+    {{#if error_overused_invite_code}}
+    {{> common/message
+        level="error" caption="Error"
+        message="The invite code has expired." }}
+    {{/if}}
+
+    {{#if error_user_already_exists}}
+    {{> common/message
+        level="error" caption="Error"
+        message="A user with this name already exists." }}
+    {{/if}}
+
+    {{#if error_confirmation_pass_doesnt_match}}
+    {{> common/message
+        level="error" caption="Error"
+        message="Passwords do not match." }}
+    {{/if}}
+
+    <form action="/api/register" method="POST">
+        {{#if invite_code_required}}
+        <div class="input-group">
+            <input id="invite-code" required=true name="invite_code" type="text">
+            <label for="invite-code">Invite code</label>
         </div>
-    </div>
-</body>
+        {{/if}}
 
-</html>
+        <div class="input-group">
+            <input id="username" required=true name="username" type="text">
+            <label for="username">Username</label>
+        </div>
+
+        <div class="input-group">
+            <input id="password" required=true name="password" type="password">
+            <label for="password">Password</label>
+        </div>
+
+        <div class="input-group">
+            <input id="rpassword" required=true name="repeat_password" type="password">
+            <label for="rpassword">Repeat password</label>
+        </div>
+
+        <div class="input-group">
+            <input type="submit" value="Create an account" />
+        </div>
+    </form>
+
+    <div class="flex justify-content-between wrap">
+        <a href="/register">Have an invite code?</a>
+    </div>
+</div>
+{{/inline}}
+{{~> layouts/modal_page ~}}
