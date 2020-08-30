@@ -16,8 +16,12 @@ use rocket_contrib::templates::Template;
 use std::env;
 
 #[get("/")]
-pub fn index() -> Template {
-    Template::render("index", 0u32)
+pub fn index(mut cookies: Cookies) -> Redirect {
+    if let Some(_sid) = cookies.get_private("UID") {
+        Redirect::to(uri!(home))
+    } else {
+        Redirect::to(uri!(login))
+    }
 }
 
 #[get("/login")]
