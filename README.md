@@ -10,6 +10,7 @@ You can build the server from sources for yourself.
 - [Few basic requirements](#basic-requirements)
 - Rust nightly (1.47+) (Older versions might work, but weren't tested)
 - SQLite libraries (`sqlite-sys` needs them)
+- OpenSSL
 
 ## Installing rust
 1.    Follow steps on [rustup.rs](https://rustup.rs)
@@ -71,7 +72,7 @@ Requirements have been tested on bare docker containers for the matching distrib
 If you find that packages aren't needed, please post an issue.
 ### Arch linux
 ```
-# pacman -S curl git clang pkgconfig
+# pacman -S curl git clang pkg-config openssl sqlite
 ```
 
 ### Void Linux
