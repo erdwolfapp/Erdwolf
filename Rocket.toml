@@ -1,7 +1,7 @@
 # [global.databases]
 # data = { url = "temp.sqlite" }
 [development]
-address = "192.168.0.157"
+address = "0.0.0.0"
 port = 8080
 template_dir = "templates/"
 
