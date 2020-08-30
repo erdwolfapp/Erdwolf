@@ -1,3 +1,2 @@
-@forward 'accel/color';
-@forward 'accel/layout';
-@forward 'accel/contrast';
+@forward 'framework/framework';
+@warn "Deprecated module loaded: accel/accel; replaced with framework/framework";

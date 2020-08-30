@@ -1,5 +1,5 @@
 @use 'config/colors';
-@use 'accel/contrast';
+@use 'framework/contrast';
 @use 'sass:color';
 
 @function getColorBrightness($color) {
