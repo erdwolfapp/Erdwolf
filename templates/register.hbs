@@ -1,74 +1,67 @@
-{{#*inline "page" }}
-<div class="modal-header">
-    <img src="/static/svg/app.svg" class="app-logo" alt="Erdwolf" />
-    <h1 class="app-name">Erdwolf</h1>
-</div>
+{{#*inline "modal-content" }}
+<h2 class="section-title">Create an account</h2>
 
-<div class="modal-content">
-    <h2 class="section-title">Create an account</h2>
-
-    {{#if error_invite_code_not_specified}}
-    {{> common/message
+{{#if error_invite_code_not_specified}}
+{{> widgets/message
         level="error" caption="Error"
         message="Local policy does not allow registration without an invite code.
                  Contact your administrator if you have not received one." }}
-    {{/if}}
+{{/if}}
 
-    {{#if error_invalid_invite_code}}
-    {{> common/message
+{{#if error_invalid_invite_code}}
+{{> widgets/message
         level="error" caption="Error"
         message="Provided invite code is invalid." }}
-    {{/if}}
+{{/if}}
 
-    {{#if error_overused_invite_code}}
-    {{> common/message
+{{#if error_overused_invite_code}}
+{{> widgets/message
         level="error" caption="Error"
         message="The invite code has expired." }}
-    {{/if}}
+{{/if}}
 
-    {{#if error_user_already_exists}}
-    {{> common/message
+{{#if error_user_already_exists}}
+{{> widgets/message
         level="error" caption="Error"
         message="A user with this name already exists." }}
-    {{/if}}
+{{/if}}
 
-    {{#if error_confirmation_pass_doesnt_match}}
-    {{> common/message
+{{#if error_confirmation_pass_doesnt_match}}
+{{> widgets/message
         level="error" caption="Error"
         message="Passwords do not match." }}
+{{/if}}
+
+<form action="/api/register" method="POST">
+    {{#if invite_code_required}}
+    <div class="input-group">
+        <input id="invite-code" required=true name="invite_code" type="text">
+        <label for="invite-code">Invite code</label>
+    </div>
     {{/if}}
 
-    <form action="/api/register" method="POST">
-        {{#if invite_code_required}}
-        <div class="input-group">
-            <input id="invite-code" required=true name="invite_code" type="text">
-            <label for="invite-code">Invite code</label>
-        </div>
-        {{/if}}
-
-        <div class="input-group">
-            <input id="username" required=true name="username" type="text">
-            <label for="username">Username</label>
-        </div>
-
-        <div class="input-group">
-            <input id="password" required=true name="password" type="password">
-            <label for="password">Password</label>
-        </div>
-
-        <div class="input-group">
-            <input id="rpassword" required=true name="repeat_password" type="password">
-            <label for="rpassword">Repeat password</label>
-        </div>
-
-        <div class="input-group">
-            <input type="submit" value="Create an account" />
-        </div>
-    </form>
-
-    <div class="flex justify-content-between wrap">
-        <a href="/register">Have an invite code?</a>
+    <div class="input-group">
+        <input id="username" required=true name="username" type="text">
+        <label for="username">Username</label>
     </div>
+
+    <div class="input-group">
+        <input id="password" required=true name="password" type="password">
+        <label for="password">Password</label>
+    </div>
+
+    <div class="input-group">
+        <input id="rpassword" required=true name="repeat_password" type="password">
+        <label for="rpassword">Repeat password</label>
+    </div>
+
+    <div class="input-group">
+        <input type="submit" value="Create an account" />
+    </div>
+</form>
+
+<div class="flex justify-content-between wrap">
+    <a href="/login">Already have an account?</a>
 </div>
 {{/inline}}
 {{~> layouts/modal_page ~}}

@@ -1,0 +1,11 @@
+@use 'accel/accel';
+@use 'config/document';
+
+$headerOuterMargin: 1.8em;
+$userNavBgColor: lighten(document.$bgColor, 80%);
+
+$item-spacing: 0.4em;
+$navOuterMargin: $headerOuterMargin - 0.4em;
+$item-font-color: darken(document.$fgColor, 8%);
+$current-item-font-color: document.$fgColor;
+$navPanelBgColor: accel.adjustColor(document.$bgColor, 10%, $flat: true);

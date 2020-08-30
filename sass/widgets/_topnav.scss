@@ -1,26 +1,19 @@
-$item-spacing: 4px !default;
-$outer-margin: 2px !default;
-$item-font-color: #00b !default;
-$current-item-font-color: #222 !default;
-$split-panel: 0 !default;
-$split-panel-color: #666 !default;
+@use 'accel/accel';
+@use 'config/topbar' as cfg;
 
-header#app-header {
+#app-header {
+  @include accel.flex($direction: row, $y: center);
+
   .app-name.next-to-nav {
-    padding-right: $outer-margin;
-    @if ($split-panel == 0) {
-      border-right: 1px solid $item-font-color;
-    }
+    padding-right: cfg.$navOuterMargin;
   }
 
-  & > .full-width.flex {
-    @if ($split-panel == 1) {
-      padding: 2px $outer-margin / 2;
-      border-radius: 2px;
-      background: $split-panel-color;
-    } @else {
-      margin: 0 $outer-margin;
-    }
+  & > #panel-container {
+    @include accel.flex($direction: row, $x: space-between, $y: center);
+    width: 100%;
+    padding: 2px cfg.$navOuterMargin / 2;
+    border-radius: 2px;
+    background: cfg.$navPanelBgColor;
   }
 
   /* Meta navigation */
@@ -31,14 +24,14 @@ header#app-header {
 
     a.nav-item {
       display: block;
-      margin: 0 $item-spacing;
-      color: $item-font-color;
+      margin: 0 cfg.$item-spacing;
+      color: cfg.$item-font-color;
       font-size: 1.2em;
       font-weight: 600;
       text-transform: uppercase;
 
       &.current {
-        color: $current-item-font-color;
+        color: cfg.$current-item-font-color;
         font-weight: 900;
       }
     }
