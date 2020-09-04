@@ -17,6 +17,7 @@ impl Podman {
     }
 
     // Starts the server up for 5000 seconds.
+    /// Start the Podman server service for interaction
     fn start_server(&self) -> Result<(), String> {
         if std::fs::File::open(format!("/run/user/{}/podman/podman.sock", self.uid)).is_err() {
             run_command_in_background("podman system service -t 5000", "/");
@@ -25,15 +26,135 @@ impl Podman {
         Ok(())
     }
 
+    // System commands
+
+    /// Get information about the Podman host
     pub fn get_server_info(&self) {
         self.start_server();
-        let out = self.send_request_to_podman("http://d/v1.0.0/libpod/info");
+        let out = self.send_request_to_podman("http://d/v1.0.0/libpod/info", CurlRequestType::GET);
         if let Ok(s) = out {
             println!("Sock response: \"{}\"", s);
         } else {
             println!("Error `{}` occured!", out.unwrap_err());
         }
     }
+
+    // Image commands
+
+    /// Get list of all images
+    pub fn get_images(&self) -> Result<String, String> {
+        self.start_server();
+        let out =
+            self.send_request_to_podman("http://d/v1.0.0/libpod/images/json", CurlRequestType::GET);
+        if let Ok(s) = out {
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    // Container commands
+
+    pub fn start_container(&self, name: String) -> Result<String, String> {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}/start", name),
+            CurlRequestType::POST,
+        );
+        if let Ok(s) = out {
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    pub fn restart_container(&self, name: String) -> Result<String, String> {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}/restart", name),
+            CurlRequestType::POST,
+        );
+        if let Ok(s) = out {
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    pub fn stop_container(&self, name: String) -> Result<String, String> {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}/stop", name),
+            CurlRequestType::POST,
+        );
+        if let Ok(s) = out {
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    pub fn inspect_container(&self, name: String) -> Result<String, String> {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}/json", name),
+            CurlRequestType::GET,
+        );
+        if let Ok(s) = out {
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    pub fn export_container(&self, name: String) -> Result<String, String> {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}/export", name),
+            CurlRequestType::GET,
+        );
+        if let Ok(s) = out {
+            // TODO: Save tarball as a file and don't print it to STDOUT
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    pub fn container_exists(&self, name: String) -> bool {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}/exists", name),
+            CurlRequestType::GET,
+        );
+        if let Ok(_) = out {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn delete_container(&self, name: String) -> Result<String, String> {
+        self.start_server();
+        let out = self.send_request_to_podman(
+            &format!("http://d/v1.0.0/libpod/containers/{}", name),
+            CurlRequestType::DELETE,
+        );
+        if let Ok(s) = out {
+            println!("Sock response: \"{}\"", s);
+            Ok(s)
+        } else {
+            Err(format!("Error `{}` occured!", out.unwrap_err()))
+        }
+    }
+
+    // Utilities
 
     fn get_uid(&mut self) -> Result<u32, String> {
         let msg = run_command("id", "/");
@@ -54,7 +175,7 @@ impl Podman {
         Ok(self.uid)
     }
 
-    fn send_request_to_podman(&self, url: &str) -> Result<String, u32> {
+    fn send_request_to_podman(&self, url: &str, reqtype: CurlRequestType) -> Result<String, u32> {
         let mut easy = Easy2::new(Collector(Vec::new()));
         easy.unix_socket(&format!("/run/user/{}/podman/podman.sock", self.uid))
             .unwrap();
@@ -69,10 +190,22 @@ impl Podman {
     }
 }
 
+enum CurlRequestType {
+    GET,
+    POST,
+    DELETE,
+}
+
 #[test]
 fn get_server_info_test() {
     let podman = Podman::new();
     podman.get_server_info();
+}
+
+#[test]
+fn get_images_test() {
+    let podman = Podman::new();
+    assert!(podman.get_images().is_ok());
 }
 
 #[test]
